@@ -1,6 +1,7 @@
 import random 
 import os
-import string
+import re
+import fileinput
 import sys
 
 stopWordsList = ["i", "me", "my", "myself", "we", "our", "ours", "ourselves", "you", "your", "yours",
@@ -25,12 +26,44 @@ def getIndexes(seed):
         ret.append(random.randint(0, 50000-1))
     return ret
 
+
+def process_delimiters(delimiters):
+    special_characters = ['.', '\\', '+', '*', '?', '[', ']', '(', ')', '{', '}', '!', ':', '-']
+    regex = ""
+    delimiters_as_list = [*delimiters]
+    for delimiter in delimiters_as_list:
+        if delimiter in special_characters:
+            regex += "\\" + delimiter + "|"
+        else:
+            regex += delimiter + "|"
+    return regex[:-1]
+
 def process(userID):
     indexes = getIndexes(userID)
     ret = []
-    # TODO
-                    
+
+    lines_subset = []
+    file_lines = []
+
+    for line in sys.stdin:
+        file_lines.append(line.strip())
+
+    regex_delimeters = process_delimiters(delimiters)
+    word_dict = {}
+    for index in indexes:
+        lines_subset.append(file_lines[index].lower())
+
+    for line in lines_subset:
+        words = re.split(regex_delimeters, line)
+        for word in words:
+            if word not in stopWordsList and word != "":
+                if word in word_dict:
+                    word_dict[word] += 1
+                else:
+                    word_dict[word] = 1
+
+    ret = sorted(word_dict.items(), key=lambda x : (-x[1], x[0]))[0:20]
     for word in ret:
-        print(word)
+        print(word[0])
 
 process(sys.argv[1])
