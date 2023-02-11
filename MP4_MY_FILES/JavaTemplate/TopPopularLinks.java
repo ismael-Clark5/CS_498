@@ -50,30 +50,79 @@ public class TopPopularLinks extends Configured implements Tool {
     }
 
     public static class LinkCountMap extends Mapper<Object, Text, IntWritable, IntWritable> {
-        //TODO
+        @Override
+        public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
+            String line = value.toString();
+            String[] pairs = line.split(":");
+            StringTokenizer linksTokens = new StringTokenizer(" ", pairs[1])
+            while(linksTokens.hasMoreTokens()){
+                String nextToken = linksTokens.nextToken().trim().toLowerCase();
+                context.write(new IntWritable(Integer.parseInt(nextToken)), new IntWritable(1));
+            }
+        }
     }
 
     public static class LinkCountReduce extends Reducer<IntWritable, IntWritable, IntWritable, IntWritable> {
-        //TODO
+        @Override
+        public void reduce(IntWritable key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
+            int sum = 0;
+            for (IntWritable val : values){
+                sum += val.get();
+            }
+            context.write(key, new IntWritable(sum)); // pass this output to TopTitlesMap mapper
+        }
     }
 
     public static class TopLinksMap extends Mapper<Text, Text, NullWritable, IntArrayWritable> {
+        private TreeSet<Pair<Integer, Integer>> countToTitleMap = new TreeSet<Pair<Integer, Integer>>();
 
         @Override
         protected void setup(Context context) throws IOException,InterruptedException {
             Configuration conf = context.getConfiguration();
         }
 
-       //TODO
+        public void map(Text key, Text value, Context context) throws IOException, InterruptedException {
+            Integer count = Integer.parseInt(value.toString());
+            Integer link = Integer.parseValue(key.toString());
+            countToTitleMap.add(new Pair<Integer, Integer>(count, link));
+            if(countToTitleMap.size() > 10){
+                countToTitleMap.remove(countToTitleMap.first());
+            }
+        }
+
+        @Override
+        protected void cleanup(Context context) throws IOException, InterruptedException {
+            for (Pair<Integer, Integer> item : countToTitleMap) {
+                Integer[] links = {item.second.toString(), item.first.toString()};
+                Iterable<IntWritable> val = new IntWritable(links);
+                context.write(NullWritable.get(), val);
+            }
+        }
     }
 
     public static class TopLinksReduce extends Reducer<NullWritable, IntArrayWritable, IntWritable, IntWritable> {
+        private TreeSet<Pair<Integer, Integer>> countToTitleMap = new TreeSet<Pair<Integer, Integer>>();
 
         @Override
         protected void setup(Context context) throws IOException,InterruptedException {
             Configuration conf = context.getConfiguration();
         }
-        //TODO
+        public void reduce(NullWritable key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
+            for(IntWritable val : values){
+                IntWritable[] pair = (IntWritable[]) val.toArray();
+                Integer link = Integer.parseInt(pair[0].toString());
+                Integer count = Integer.parseInt(pair[1].toString());
+                countToTitleMap.add(new Pair<Integer, Integer>(count, link));
+                if (countToTitleMap.size() > 10) {
+                    countToTitleMap.remove(countToTitleMap.first());
+                }
+            }
+            for (Pair<Integer, Integer> item : countToTitleMap) {
+                IntWritable link = new IntWritable(item.second);
+                IntWritable count = new IntWritable(item.first);
+                context.write(link, count);
+            }
+        }
 
     }
 }
