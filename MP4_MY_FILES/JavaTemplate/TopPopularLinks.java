@@ -93,7 +93,7 @@ public class TopPopularLinks extends Configured implements Tool {
         @Override
         protected void cleanup(Context context) throws IOException, InterruptedException {
             for (Pair<IntWritable, IntWritable> item : countToTitleMap) {
-                IntWritable[] links = {item.second, item.first};
+                Integer[] links = {item.second, item.first};
                 IntArrayWritable val = new IntArrayWritable(links) ;
                 context.write(NullWritable.get(), val);
             }
@@ -109,9 +109,9 @@ public class TopPopularLinks extends Configured implements Tool {
         }
         public void reduce(NullWritable key, Iterable<IntArrayWritable> values, Context context) throws IOException, InterruptedException {
             for(IntArrayWritable val : values){
-                IntWritable[] pair =(IntWritable[]) val.toArray();
-                IntWritable link = pair[0];
-                IntWritable count = pair[1];
+                Integer[] pair =(Integer[]) val.toArray();
+                IntWritable link = new IntWritable(pair[0]);
+                IntWritable count = new IntWritable(pair[1]);
                 countToTitleMap.add(new Pair<IntWritable, IntWritable>(count, link));
                 if (countToTitleMap.size() > 10) {
                     countToTitleMap.remove(countToTitleMap.first());
