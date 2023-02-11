@@ -108,7 +108,6 @@ public class TopPopularLinks extends Configured implements Tool {
             Configuration conf = context.getConfiguration();
         }
         public void reduce(NullWritable key, Iterable<IntArrayWritable> values, Context context) throws IOException, InterruptedException {
-            System.out.println(val);
             for(IntArrayWritable val : values){
                 IntWritable[] pair =(IntWritable[]) val.toArray();
                 IntWritable link = pair[0];
