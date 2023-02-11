@@ -168,8 +168,6 @@ public class TopTitleStatistics extends Configured implements Tool {
 
         @Override
         protected void cleanup(Context context) throws IOException, InterruptedException {
-            System.out.println(countToTitleMap.size());
-            System.out.println(countToTitleMap.toString());
             for (Pair<Integer, String> item : countToTitleMap) {
                 String[] strings = {item.second, item.first.toString()};
                 TextArrayWritable val = new TextArrayWritable(strings);
@@ -190,17 +188,24 @@ public class TopTitleStatistics extends Configured implements Tool {
         public void reduce(NullWritable key, Iterable<TextArrayWritable> values, Context context) throws IOException, InterruptedException {
             Integer sum, mean, max, min, var;
             sum = 0;
-            max = new Integer (countToTitleMap.last().first);
-            min = new Integer (countToTitleMap.first().first);
 
-
+            for(TextArrayWritable val : values){
+                Text[] pair = (Text[]) val.toArray();
+                String word = pair[0].toString();
+                Integer count = Integer.parseInt(pair[1].toString());
+                countToTitleMap.add(new Pair<Integer, String>(count, word));
+                if (countToTitleMap.size() > 10) {
+                    countToTitleMap.remove(countToTitleMap.first());
+                }
+            }
             for (Pair<Integer, String> item : countToTitleMap) {
                 Text word = new Text(item.second);
                 Integer value = new Integer (item.first);
                 sum += value;
             }
+            max = new Integer (countToTitleMap.last().first);
+            min = new Integer (countToTitleMap.first().first);
             var = 0;
-            System.out.println(countToTitleMap.toString());
             mean = (int)Math.floor(sum / countToTitleMap.size());
             mean = 2000;
             for(Pair<Integer, String> item : countToTitleMap) {
