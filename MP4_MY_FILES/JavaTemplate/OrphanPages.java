@@ -74,13 +74,13 @@ public class OrphanPages extends Configured implements Tool {
                 rightSide.add(val);
             }
 
-            for(Integer element : leftSide){
+            for(IntWritable element : leftSide){
                 if(!rightSide.contains(element)){
                     difference.add(element);
                 }
             }
-            for(Integer element: difference){
-                context.write(new IntWritable(element), NullWritable.get());
+            for(IntWritable element: difference){
+                context.write(element, NullWritable.get());
             }
         }
     }
