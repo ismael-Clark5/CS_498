@@ -94,7 +94,7 @@ public class TopPopularLinks extends Configured implements Tool {
         protected void cleanup(Context context) throws IOException, InterruptedException {
             for (Pair<Integer, Integer> item : countToTitleMap) {
                 Integer[] links = {Integer.parseInt(item.second.toString()), Integer.parseInt(item.first.toString())};
-                IntArrayWritable<IntWritable> val = (IntArrayWritable)links ;
+                IntArrayWritable val = new IntArrayWritable(links) ;
                 context.write(NullWritable.get(), val);
             }
         }
