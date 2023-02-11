@@ -47,16 +47,39 @@ public class OrphanPages extends Configured implements Tool {
     public static class LinkCountMap extends Mapper<Object, Text, IntWritable, IntWritable> {
         @Override
         public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
-            //TODO
-            //context.write(<IntWritable>, <IntWritable>); // pass this output to reducer
+            String[] line = value.toString().split(':');
+            String pageId = line[0];
+            String links = line[1].split(' ');
+            for(int i = 1; i < links.length; i++){
+                if(!pageId.equals(links[i])){
+                    context.write(new Text(pageId), new Text(links[i]));
+                }
+                else{
+                    context.write(new Text(pageId), new Text("absent"));
+                }
+            }
         }
     }
 
     public static class OrphanPageReduce extends Reducer<IntWritable, IntWritable, IntWritable, NullWritable> {
         @Override
         public void reduce(IntWritable key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
-            //TODO
-            //context.write(<IntWritable>, <NullWritable>); // print as final output
+            TreeSet<String> leftSide = new TreeSet<String>();
+            TreeSer<String> rightSide = new TreeSet<String>();
+            for(TextArrayWritable val : values){
+                Text[] valuesPair = (Text[]) values.toArray();
+                leftSide.add(valuesPair[0].toString());
+                rightSide.add(valuesPair[1].toString());
+            }
+            TreeSet<String> difference = new TreeSet<String>();
+            for(String element : leftSide){
+                if(!rightSide.contains(element)){
+                    difference.add(element);
+                }
+            }
+            for(String element: difference){
+                context.write(element);
+            }
         }
     }
 }
