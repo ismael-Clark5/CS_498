@@ -83,7 +83,7 @@ public class TopPopularLinks extends Configured implements Tool {
 
         public void map(Text key, Text value, Context context) throws IOException, InterruptedException {
             Integer count = Integer.parseInt(value.toString());
-            Integer link = Integer.parseValue(key.toString());
+            Integer link = Integer.parseInt(key.toString());
             countToTitleMap.add(new Pair<Integer, Integer>(count, link));
             if(countToTitleMap.size() > 10){
                 countToTitleMap.remove(countToTitleMap.first());
@@ -93,7 +93,7 @@ public class TopPopularLinks extends Configured implements Tool {
         @Override
         protected void cleanup(Context context) throws IOException, InterruptedException {
             for (Pair<Integer, Integer> item : countToTitleMap) {
-                Integer[] links = {item.second.toString(), item.first.toString()};
+                Integer[] links = {Integer.parseInt(item.second.toString()), Integer.parseInt(item.first.toString())};
                 IntArrayWritable<IntWritable> val = new IntArrayWritable(links);
                 context.write(NullWritable.get(), val);
             }
