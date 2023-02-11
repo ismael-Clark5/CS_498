@@ -199,7 +199,9 @@ public class TopTitleStatistics extends Configured implements Tool {
                 sum += value;
             }
             var = 0;
-            mean = (int)Math.floor(sum / countToTitleMap.size());
+            System.out.println(countToTitleMap.toString());
+//            mean = (int)Math.floor(sum / countToTitleMap.size());
+            mean = 2000;
             for(Pair<Integer, String> item : countToTitleMap) {
                 Integer value = new Integer(item.first);
                 var += (int)Math.floor(Math.pow(value - mean, 2));
