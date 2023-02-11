@@ -64,20 +64,20 @@ public class OrphanPages extends Configured implements Tool {
     public static class OrphanPageReduce extends Reducer<IntWritable, IntWritable, IntWritable, NullWritable> {
         @Override
         public void reduce(IntWritable key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
-            TreeSet<String> leftSide = new TreeSet<String>();
-            TreeSer<String> rightSide = new TreeSet<String>();
+            TreeSet<Integer> leftSide = new TreeSet<Integer>();
+            TreeSer<Integer> rightSide = new TreeSet<Integer>();
             for(TextArrayWritable val : values){
                 Text[] valuesPair = (Text[]) values.toArray();
                 leftSide.add(Integer.parseInt(valuesPair[0].toString()));
                 rightSide.add(Integer.parseInt(valuesPair[1].toString()));
             }
-            TreeSet<String> difference = new TreeSet<String>();
-            for(String element : leftSide){
+            TreeSet<Integer> difference = new TreeSet<String>();
+            for(Integer element : leftSide){
                 if(!rightSide.contains(element)){
                     difference.add(element);
                 }
             }
-            for(String element: difference){
+            for(Integer element: difference){
                 context.write(element);
             }
         }
