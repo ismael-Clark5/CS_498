@@ -69,7 +69,7 @@ public class OrphanPages extends Configured implements Tool {
         @Override
         public void reduce(IntWritable key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
 
-            for(TextArrayWritable val : values){
+            for(IntWritable val : values){
                 Text[] valuesPair = (Text[]) values.toArray();
                 leftSide.add(Integer.parseInt(valuesPair[0].toString()));
                 rightSide.add(Integer.parseInt(valuesPair[1].toString()));
@@ -81,7 +81,7 @@ public class OrphanPages extends Configured implements Tool {
                 }
             }
             for(Integer element: difference){
-                context.write(NullWritable.get(), new IntWritable(element));
+                context.write(new IntWritable(element), NullWritable.get());
             }
         }
     }
