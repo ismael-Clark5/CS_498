@@ -74,7 +74,7 @@ public class TopPopularLinks extends Configured implements Tool {
     }
 
     public static class TopLinksMap extends Mapper<Text, Text, NullWritable, IntArrayWritable> {
-        private TreeSet<Pair<Integer, Integer>> countToTitleMap = new TreeSet<Pair<Integer, Integer>>();
+        private TreeSet<Pair<IntWritable, IntWritable>> countToTitleMap = new TreeSet<Pair<IntWritable, IntWritable>>();
 
         @Override
         protected void setup(Context context) throws IOException,InterruptedException {
@@ -84,7 +84,7 @@ public class TopPopularLinks extends Configured implements Tool {
         public void map(Text key, Text value, Context context) throws IOException, InterruptedException {
             Integer count = Integer.parseInt(value.toString());
             Integer link = Integer.parseInt(key.toString());
-            countToTitleMap.add(new Pair<Integer, Integer>(count, link));
+            countToTitleMap.add(new Pair<IntWritable, IntWritable>(new IntWritable(count), new IntWritable(link)));
             if(countToTitleMap.size() > 10){
                 countToTitleMap.remove(countToTitleMap.first());
             }
@@ -93,7 +93,7 @@ public class TopPopularLinks extends Configured implements Tool {
         @Override
         protected void cleanup(Context context) throws IOException, InterruptedException {
             for (Pair<Integer, Integer> item : countToTitleMap) {
-                Integer[] links = {Integer.parseInt(item.second.toString()), Integer.parseInt(item.first.toString())};
+                Integer[] links = {item.second, item.first.toString()};
                 IntArrayWritable val = new IntArrayWritable(links) ;
                 context.write(NullWritable.get(), val);
             }
@@ -101,24 +101,24 @@ public class TopPopularLinks extends Configured implements Tool {
     }
 
     public static class TopLinksReduce extends Reducer<NullWritable, IntArrayWritable, IntWritable, IntWritable> {
-        private TreeSet<Pair<Integer, Integer>> countToTitleMap = new TreeSet<Pair<Integer, Integer>>();
+        private TreeSet<Pair<IntWritable, IntWritable>> countToTitleMap = new TreeSet<Pair<IntWritable, IntWritable>>();
 
         @Override
         protected void setup(Context context) throws IOException,InterruptedException {
             Configuration conf = context.getConfiguration();
         }
         public void reduce(NullWritable key, Iterable<IntArrayWritable> values, Context context) throws IOException, InterruptedException {
+            System.out.println(val);
             for(IntArrayWritable val : values){
-                System.out.println(val);
-                Integer[] pair = val.toArray();
-                Integer link = pair[0];
-                Integer count = pair[1];
-                countToTitleMap.add(new Pair<Integer, Integer>(count, link));
+                IntWritable[] pair =(IntWritable[]) val.toArray();
+                IntWritable link = pair[0];
+                IntWritable count = pair[1];
+                countToTitleMap.add(new Pair<IntWritable, IntWritable>(count, link));
                 if (countToTitleMap.size() > 10) {
                     countToTitleMap.remove(countToTitleMap.first());
                 }
             }
-            for (Pair<Integer, Integer> item : countToTitleMap) {
+            for (Pair<IntWritable, IntWritable> item : countToTitleMap) {
                 IntWritable link = new IntWritable(item.second);
                 IntWritable count = new IntWritable(item.first);
                 context.write(link, count);
