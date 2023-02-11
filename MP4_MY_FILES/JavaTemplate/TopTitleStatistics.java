@@ -161,8 +161,8 @@ public class TopTitleStatistics extends Configured implements Tool {
             String word = key.toString();
             Integer count = Integer.parseInt(value.toString());
             countToTitleMap.add(new Pair<Integer, String>(count, word));
-            System.out.println(countToTitleMap);
             if(countToTitleMap.size() > 10){
+                System.out.println(countToTitleMap.size());
                 countToTitleMap.remove(countToTitleMap.first());
             }
         }
