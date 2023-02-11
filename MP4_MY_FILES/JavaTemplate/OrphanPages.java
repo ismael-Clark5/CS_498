@@ -55,7 +55,7 @@ public class OrphanPages extends Configured implements Tool {
                     context.write(new IntWritable(Integer.parseInt(pageId)), new IntWritable(Integer.parseInt(links[i])));
                 }
                 else{
-                    context.write(new IntWritable(pageId), new IntWritable(-1));
+                    context.write(new IntWritable(Integer.parseInt(pageId)), new IntWritable(-1));
                 }
             }
         }
@@ -68,8 +68,8 @@ public class OrphanPages extends Configured implements Tool {
             TreeSer<String> rightSide = new TreeSet<String>();
             for(TextArrayWritable val : values){
                 Text[] valuesPair = (Text[]) values.toArray();
-                leftSide.add(valuesPair[0].toString());
-                rightSide.add(valuesPair[1].toString());
+                leftSide.add(Integer.parseInt(valuesPair[0].toString()));
+                rightSide.add(Integer.parseInt(valuesPair[1].toString()));
             }
             TreeSet<String> difference = new TreeSet<String>();
             for(String element : leftSide){
