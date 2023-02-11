@@ -188,8 +188,8 @@ public class TopTitleStatistics extends Configured implements Tool {
         public void reduce(NullWritable key, Iterable<TextArrayWritable> values, Context context) throws IOException, InterruptedException {
             Integer sum, mean, max, min, var;
             sum = 0;
-            max = IntWritable(countToTitleMap.get(0).first);
-            min = IntWritable(countToTitleMap.get(0).first);
+            max = IntWritable(countToTitleMap.last());
+            min = IntWritable(countToTitleMap.first());
             for (Pair<Integer, String> item : countToTitleMap) {
                 Text word = new Text(item.second);
                 IntWritable value = new IntWritable(item.first);
