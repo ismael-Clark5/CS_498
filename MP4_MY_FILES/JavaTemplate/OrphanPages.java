@@ -63,15 +63,15 @@ public class OrphanPages extends Configured implements Tool {
     }
 
     public static class OrphanPageReduce extends Reducer<IntWritable, IntWritable, IntWritable, NullWritable> {
-        private TreeSet <Integer> leftSide = new TreeSet<Integer>();
-        private TreeSet <Integer> rightSide = new TreeSet<Integer>();
-        private TreeSet<Integer> difference = new TreeSet<Integer>();
+        private TreeSet <IntWritable> leftSide = new TreeSet<IntWritable>();
+        private TreeSet <IntWritable> rightSide = new TreeSet<IntWritable>();
+        private TreeSet<IntWritable> difference = new TreeSet<IntWritable>();
         @Override
         public void reduce(IntWritable key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
 
-            leftSide.add(new Integer(key));
+            leftSide.add(key);
             for(IntWritable val : values){
-                rightSide.add(new Integer(val));
+                rightSide.add(val);
             }
 
             for(Integer element : leftSide){
