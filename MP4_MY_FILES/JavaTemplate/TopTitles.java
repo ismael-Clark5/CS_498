@@ -138,14 +138,11 @@ public class TopTitles extends Configured implements Tool {
     public static class TitleCountReduce extends Reducer<Text, IntWritable, Text, IntWritable> {
         @Override
         public void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
-            @Override
-            public void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
                 int sum = 0;
                 for (IntWritable val : values){
                     sum += val.get();
                 }
                 context.write(key, new IntWritable(sum)); // pass this output to TopTitlesMap mapper
-            }
         }
     }
 
