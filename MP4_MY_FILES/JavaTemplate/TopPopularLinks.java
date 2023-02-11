@@ -92,8 +92,8 @@ public class TopPopularLinks extends Configured implements Tool {
 
         @Override
         protected void cleanup(Context context) throws IOException, InterruptedException {
-            for (Pair<Integer, Integer> item : countToTitleMap) {
-                Integer[] links = {item.second, item.first.toString()};
+            for (Pair<IntWritable, IntWritable> item : countToTitleMap) {
+                IntWritable[] links = {item.second, item.first};
                 IntArrayWritable val = new IntArrayWritable(links) ;
                 context.write(NullWritable.get(), val);
             }
@@ -119,9 +119,7 @@ public class TopPopularLinks extends Configured implements Tool {
                 }
             }
             for (Pair<IntWritable, IntWritable> item : countToTitleMap) {
-                IntWritable link = new IntWritable(item.second);
-                IntWritable count = new IntWritable(item.first);
-                context.write(link, count);
+                context.write(item.second, item.first);
             }
         }
 
