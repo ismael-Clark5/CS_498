@@ -53,7 +53,7 @@ public class TopPopularLinks extends Configured implements Tool {
         jobA.waitForCompletion(true);
 
         Job jobB = Job.getInstance(conf, "Top Links");
-        jobB.setOutputKeyClass(IntWritable.class);
+        jobB.setOutputKeyClass(NullWritable.class);
         jobB.setOutputValueClass(IntWritable.class);
 
         jobB.setMapOutputKeyClass(NullWritable.class);
