@@ -40,7 +40,7 @@ public class TopPopularLinks extends Configured implements Tool {
         fs.delete(tmpPath, true);
 
         Job jobA = Job.getInstance(conf, "Link Count");
-        jobA.setOutputKeyClass(Text.class);
+        jobA.setOutputKeyClass(IntWritable.class);
         jobA.setOutputValueClass(IntWritable.class);
 
         jobA.setMapperClass(LinkCountMap.class);
@@ -109,7 +109,7 @@ public class TopPopularLinks extends Configured implements Tool {
             StringTokenizer linksTokens = new StringTokenizer(" ", pairs[1]);
             while(linksTokens.hasMoreTokens()){
                 String nextToken = linksTokens.nextToken().trim().toLowerCase();
-                context.write(new Text (nextToken), new IntWritable(1));
+                context.write(new IntWritable (nextToken), new IntWritable(1));
             }
         }
     }
@@ -121,7 +121,7 @@ public class TopPopularLinks extends Configured implements Tool {
             for (IntWritable val : values){
                 sum += val.get();
             }
-            context.write(key, new IntWritable(sum)); // pass this output to TopTitlesMap mapper
+            context.write(new IntWirtable(Integer.parseInt(key.toString())), new IntWritable(sum)); // pass this output to TopTitlesMap mapper
         }
     }
 
