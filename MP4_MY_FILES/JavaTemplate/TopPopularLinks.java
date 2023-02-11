@@ -22,6 +22,8 @@ import java.io.IOException;
 import java.lang.Integer;
 import java.util.StringTokenizer;
 import java.util.TreeSet;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 public class TopPopularLinks extends Configured implements Tool {
     public static void main(String[] args) throws Exception {
