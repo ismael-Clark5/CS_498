@@ -161,6 +161,7 @@ public class TopTitleStatistics extends Configured implements Tool {
             String word = key.toString();
             Integer count = Integer.parseInt(value.toString());
             countToTitleMap.add(new Pair<Integer, String>(count, word));
+            System.out.println(countToTitleMap);
             if(countToTitleMap.size() > 10){
                 countToTitleMap.remove(countToTitleMap.first());
             }
@@ -188,10 +189,9 @@ public class TopTitleStatistics extends Configured implements Tool {
         public void reduce(NullWritable key, Iterable<TextArrayWritable> values, Context context) throws IOException, InterruptedException {
             Integer sum, mean, max, min, var;
             sum = 0;
-//            max = new Integer (countToTitleMap.last().first);
-//            min = new Integer (countToTitleMap.first().first);
-            max = 0;
-            min = 0;
+            max = new Integer (countToTitleMap.last().first);
+            min = new Integer (countToTitleMap.first().first);
+
 
             for (Pair<Integer, String> item : countToTitleMap) {
                 Text word = new Text(item.second);
@@ -200,7 +200,7 @@ public class TopTitleStatistics extends Configured implements Tool {
             }
             var = 0;
             System.out.println(countToTitleMap.toString());
-//            mean = (int)Math.floor(sum / countToTitleMap.size());
+            mean = (int)Math.floor(sum / countToTitleMap.size());
             mean = 2000;
             for(Pair<Integer, String> item : countToTitleMap) {
                 Integer value = new Integer(item.first);
