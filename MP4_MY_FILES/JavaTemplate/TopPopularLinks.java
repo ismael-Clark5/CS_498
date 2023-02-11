@@ -107,11 +107,11 @@ public class TopPopularLinks extends Configured implements Tool {
         protected void setup(Context context) throws IOException,InterruptedException {
             Configuration conf = context.getConfiguration();
         }
-        public void reduce(NullWritable key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
+        public void reduce(NullWritable key, IntArrayWritable values, Context context) throws IOException, InterruptedException {
             for(IntWritable val : values){
-                IntWritable[] pair = (IntWritable[]) val.toArray();
-                Integer link = Integer.parseInt(pair[0].toString());
-                Integer count = Integer.parseInt(pair[1].toString());
+                Integer[] pair = val.toArray();
+                Integer link = Integer.parseInt(pair[0]);
+                Integer count = Integer.parseInt(pair[1]);
                 countToTitleMap.add(new Pair<Integer, Integer>(count, link));
                 if (countToTitleMap.size() > 10) {
                     countToTitleMap.remove(countToTitleMap.first());
