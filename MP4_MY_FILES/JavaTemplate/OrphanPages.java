@@ -68,11 +68,10 @@ public class OrphanPages extends Configured implements Tool {
         private TreeSet<Integer> difference = new TreeSet<Integer>();
         @Override
         public void reduce(IntWritable key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
-            System.out.println(values);
+
+            leftSide.add(new Integer(key));
             for(IntWritable val : values){
-                IntWritable[] valuesPair = values.toArray();
-                leftSide.add(new Integer(valuesPair[0]));
-                rightSide.add(new Integer(valuesPair[1]));
+                rightSide.add(new Integer(val));
             }
 
             for(Integer element : leftSide){
