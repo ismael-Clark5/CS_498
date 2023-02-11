@@ -81,7 +81,7 @@ public class OrphanPages extends Configured implements Tool {
                 }
             }
             for(Integer element: difference){
-                context.write(element);
+                context.write(NullWritable.get(), new IntWritable(element));
             }
         }
     }
