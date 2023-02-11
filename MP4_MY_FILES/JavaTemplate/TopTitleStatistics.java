@@ -162,13 +162,14 @@ public class TopTitleStatistics extends Configured implements Tool {
             Integer count = Integer.parseInt(value.toString());
             countToTitleMap.add(new Pair<Integer, String>(count, word));
             if(countToTitleMap.size() > 10){
-                System.out.println(countToTitleMap.size());
                 countToTitleMap.remove(countToTitleMap.first());
             }
         }
 
         @Override
         protected void cleanup(Context context) throws IOException, InterruptedException {
+            System.out.println(countToTitleMap.size());
+            System.out.println(countToTitleMap.toString());
             for (Pair<Integer, String> item : countToTitleMap) {
                 String[] strings = {item.second, item.first.toString()};
                 TextArrayWritable val = new TextArrayWritable(strings);
