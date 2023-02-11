@@ -192,14 +192,8 @@ public class TopTitleStatistics extends Configured implements Tool {
             min = new Integer (countToTitleMap.first().first);
             for (Pair<Integer, String> item : countToTitleMap) {
                 Text word = new Text(item.second);
-                IntWritable value = new IntWritable(item.first);
+                Integer value = new Integer (item.first);
                 sum += value;
-                if(value > max){
-                    max = value;
-                }
-                if(value > min){
-                    min = value;
-                }
             }
             var = 0;
             mean = sum / countToTitleMap.size();
