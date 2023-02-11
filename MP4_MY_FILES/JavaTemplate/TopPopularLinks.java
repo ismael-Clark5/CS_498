@@ -69,7 +69,20 @@ public class TopPopularLinks extends Configured implements Tool {
         jobB.setJarByClass(TopPopularLinks.class);
         return jobB.waitForCompletion(true) ? 0 : 1;
     }
+    public static String readHDFSFile(String path, Configuration conf) throws IOException{
+        Path pt=new Path(path);
+        FileSystem fs = FileSystem.get(pt.toUri(), conf);
+        FSDataInputStream file = fs.open(pt);
+        BufferedReader buffIn=new BufferedReader(new InputStreamReader(file));
 
+        StringBuilder everything = new StringBuilder();
+        String line;
+        while( (line = buffIn.readLine()) != null) {
+            everything.append(line);
+            everything.append("\n");
+        }
+        return everything.toString();
+    }
     public static class IntArrayWritable extends ArrayWritable {
         public IntArrayWritable() {
             super(IntWritable.class);
