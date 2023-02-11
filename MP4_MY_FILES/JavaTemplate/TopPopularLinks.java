@@ -74,7 +74,7 @@ public class TopPopularLinks extends Configured implements Tool {
     }
 
     public static class TopLinksMap extends Mapper<Text, Text, NullWritable, IntArrayWritable> {
-        private TreeSet<Pair<IntWritable, IntWritable>> countToTitleMap = new TreeSet<Pair<IntWritable, IntWritable>>();
+        private TreeSet<Pair<Integer, Integer>> countToTitleMap = new TreeSet<Pair<Integer, Integer>>();
 
         @Override
         protected void setup(Context context) throws IOException,InterruptedException {
@@ -84,7 +84,7 @@ public class TopPopularLinks extends Configured implements Tool {
         public void map(Text key, Text value, Context context) throws IOException, InterruptedException {
             Integer count = Integer.parseInt(value.toString());
             Integer link = Integer.parseInt(key.toString());
-            countToTitleMap.add(new Pair<IntWritable, IntWritable>(new IntWritable(count), new IntWritable(link)));
+            countToTitleMap.add(new Pair<Integer, Integer>(count, link));
             if(countToTitleMap.size() > 10){
                 countToTitleMap.remove(countToTitleMap.first());
             }
@@ -92,7 +92,7 @@ public class TopPopularLinks extends Configured implements Tool {
 
         @Override
         protected void cleanup(Context context) throws IOException, InterruptedException {
-            for (Pair<IntWritable, IntWritable> item : countToTitleMap) {
+            for (Pair<Integer, Integer> item : countToTitleMap) {
                 Integer[] links = {item.second, item.first};
                 IntArrayWritable val = new IntArrayWritable(links) ;
                 context.write(NullWritable.get(), val);
