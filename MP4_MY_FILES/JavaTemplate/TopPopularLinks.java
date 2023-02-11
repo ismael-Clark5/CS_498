@@ -40,7 +40,7 @@ public class TopPopularLinks extends Configured implements Tool {
         fs.delete(tmpPath, true);
 
         Job jobA = Job.getInstance(conf, "Link Count");
-        jobA.setOutputKeyClass(IntWritable.class);
+        jobA.setOutputKeyClass(Text.class);
         jobA.setOutputValueClass(IntWritable.class);
 
         jobA.setMapperClass(LinkCountMap.class);
@@ -53,8 +53,8 @@ public class TopPopularLinks extends Configured implements Tool {
         jobA.waitForCompletion(true);
 
         Job jobB = Job.getInstance(conf, "Top Links");
-        jobB.setOutputKeyClass(NullWritable.class);
-        jobB.setOutputValueClass(IntArrayWritable.class);
+        jobB.setOutputKeyClass(Text.class);
+        jobB.setOutputValueClass(IntWritable.class);
 
         jobB.setMapOutputKeyClass(NullWritable.class);
         jobB.setMapOutputValueClass(IntArrayWritable.class);
@@ -109,14 +109,14 @@ public class TopPopularLinks extends Configured implements Tool {
             StringTokenizer linksTokens = new StringTokenizer(" ", pairs[1]);
             while(linksTokens.hasMoreTokens()){
                 String nextToken = linksTokens.nextToken().trim().toLowerCase();
-                context.write(new IntWritable(Integer.parseInt(nextToken)), new IntWritable(1));
+                context.write(new Text (nextToken), new IntWritable(1));
             }
         }
     }
 
     public static class LinkCountReduce extends Reducer<IntWritable, IntWritable, IntWritable, IntWritable> {
         @Override
-        public void reduce(IntWritable key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
+        public void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
             int sum = 0;
             for (IntWritable val : values){
                 sum += val.get();
