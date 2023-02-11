@@ -198,7 +198,7 @@ public class TopTitleStatistics extends Configured implements Tool {
             var = 0;
             mean = sum / countToTitleMap.size();
             for(Pair<Integer, String> item : countToTitleMap) {
-                IntWritable value = new IntWritable(item.first);
+                Integer value = new Integer(item.first);
                 var += Math.pow(value - mean, 2);
             }
             var = Math.sqrt(var/ countToTitleMap.size());
