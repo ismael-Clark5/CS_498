@@ -54,7 +54,7 @@ public class TopPopularLinks extends Configured implements Tool {
         public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
             String line = value.toString();
             String[] pairs = line.split(":");
-            StringTokenizer linksTokens = new StringTokenizer(" ", pairs[1])
+            StringTokenizer linksTokens = new StringTokenizer(" ", pairs[1]);
             while(linksTokens.hasMoreTokens()){
                 String nextToken = linksTokens.nextToken().trim().toLowerCase();
                 context.write(new IntWritable(Integer.parseInt(nextToken)), new IntWritable(1));
