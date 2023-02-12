@@ -104,6 +104,7 @@ public class TopPopularLinks extends Configured implements Tool {
     public static class LinkCountMap extends Mapper<Object, Text, IntWritable, IntWritable> {
         @Override
         public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
+            System.out.println(value);
             String line = value.toString();
             String[] pairs = line.split(":");
             StringTokenizer linksTokens = new StringTokenizer(" ", pairs[1]);
