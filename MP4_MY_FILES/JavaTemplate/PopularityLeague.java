@@ -147,6 +147,7 @@ public class PopularityLeague extends Configured implements Tool {
 
         @Override
         protected void cleanup(Context context) throws IOException, InterruptedException {
+            System.out.println(countToTitleMap.toString());
             for (Pair<Integer, Integer> item : countToTitleMap) {
                 Integer[] links = {item.second, item.first};
                 IntArrayWritable val = new IntArrayWritable(links) ;
