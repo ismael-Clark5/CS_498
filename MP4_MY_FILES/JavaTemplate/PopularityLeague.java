@@ -162,7 +162,7 @@ public class PopularityLeague extends Configured implements Tool {
             Configuration conf = context.getConfiguration();
         }
         public void reduce(NullWritable key, Iterable<IntArrayWritable> values, Context context) throws IOException, InterruptedException {
-            System.out(values.toString());
+            System.out.println(values.toString());
             for(IntArrayWritable val : values){
                 int rank = 0;
                 IntWritable[] pair =(IntWritable[]) val.toArray();
