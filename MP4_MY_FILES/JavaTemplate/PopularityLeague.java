@@ -176,7 +176,7 @@ public class PopularityLeague extends Configured implements Tool {
                 for(IntArrayWritable val : values){
                     IntWritable count2 = new IntWritable(Integer.parseInt(pair[1].toString()));
                     if(count > count2){
-                        rank += 1
+                        rank += 1;
                     }
                 }
                 countToTitleMap.add(new Pair<IntWritable, IntWritable>(new IntWritable(Integer.parseInt(rank.toString())), link));
