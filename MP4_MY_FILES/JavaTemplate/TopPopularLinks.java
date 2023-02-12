@@ -54,7 +54,7 @@ public class TopPopularLinks extends Configured implements Tool {
 
         Job jobB = Job.getInstance(conf, "Top Links");
         jobB.setOutputKeyClass(Text.class);
-        jobB.setOutputValueClass(IntWritable.class);
+        jobB.setOutputValueClass(Text.class);
 
         jobB.setMapOutputKeyClass(NullWritable.class);
         jobB.setMapOutputValueClass(IntArrayWritable.class);
@@ -134,8 +134,8 @@ public class TopPopularLinks extends Configured implements Tool {
         }
 
         public void map(Text key, Text value, Context context) throws IOException, InterruptedException {
-            Integer count = Integer.parseInt(value.toString());
-            Integer link = Integer.parseInt(key.toString());
+            IntWritable count = Integer.parseInt(value.toString());
+            IntWritable link = Integer.parseInt(key.toString());
             countToTitleMap.add(new Pair<Integer, Integer>(count, link));
             if(countToTitleMap.size() > 10){
                 countToTitleMap.remove(countToTitleMap.first());
