@@ -163,8 +163,8 @@ public class TopPopularLinks extends Configured implements Tool {
             System.out.println(values.toString());
             for(IntArrayWritable val : values){
                 Integer[] pair =(Integer[]) val.toArray();
-                IntWritable link = pair[0];
-                IntWritable count = pair[1];
+                IntWritable link = new IntWritable(Integer.parseInt(pair[0].toString()));
+                IntWritable count = new IntWritable(Integer.parseInt(pair[1].toString()));
                 countToTitleMap.add(new Pair<IntWritable, IntWritable>(count, link));
                 if (countToTitleMap.size() > 10) {
                     countToTitleMap.remove(countToTitleMap.first());
