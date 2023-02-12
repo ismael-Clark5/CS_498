@@ -183,7 +183,7 @@ public class PopularityLeague extends Configured implements Tool {
                 int rank = 0;
                 for (int count : countList){
                     if(count < Integer.parseInt(item.first.toString())){
-                        rank += 1
+                        rank += 1;
                     }
                 }
                 context.write(item.second, new IntWritable(rank));
