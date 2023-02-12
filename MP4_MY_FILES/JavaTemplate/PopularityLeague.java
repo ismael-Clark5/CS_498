@@ -169,22 +169,24 @@ public class PopularityLeague extends Configured implements Tool {
         }
         public void reduce(NullWritable key, Iterable<IntArrayWritable> values, Context context) throws IOException, InterruptedException {
             Iterator<IntArrayWritable> mainIterator = values.iterator();
-            TreeSet<Integer> countSet = new TreeSet<>();
+            List<Integer> countList = new ArrayList<>();
             while(mainIterator.hasNext()){
                 IntWritable[] pair =(IntWritable[]) mainIterator.next().toArray();
                 IntWritable link = new IntWritable(Integer.parseInt(pair[0].toString()));
                 IntWritable count = new IntWritable(Integer.parseInt(pair[1].toString()));
-                countSet.add(Integer.parseInt(count.toString()));
+                countList.add(Integer.parseInt(count.toString()));
                 countToTitleMap.add(new Pair<IntWritable, IntWritable>(count, link));
             }
             System.out.println(countToTitleMap.toString());
 
             for (Pair<IntWritable, IntWritable> item : countToTitleMap) {
-                TreeSet<Integer> headSet = new TreeSet<Integer>();
-                headSet =  (TreeSet<Integer>)countSet.headSet(Integer.parseInt(item.first.toString()));
-                System.out.println(item.first.toString());
-                System.out.println(headSet.toString());
-                context.write(item.second, new IntWritable(headSet.size()));
+                int rank = 0;
+                for (int count : countList){
+                    if(count < Integer.parseInt(item.first.toString())){
+                        rank += 1
+                    }
+                }
+                context.write(item.second, new IntWritable(rank));
             }
         }
 
