@@ -156,7 +156,6 @@ public class PopularityLeague extends Configured implements Tool {
             for (Pair<Integer, Integer> item : countToTitleMap) {
                 Integer[] links = {item.second, item.first};
                 IntArrayWritable val = new IntArrayWritable(links) ;
-                System.out.println(val.toString());
                 context.write(NullWritable.get(), val);
             }
         }
@@ -176,9 +175,8 @@ public class PopularityLeague extends Configured implements Tool {
                 IntWritable link = new IntWritable(Integer.parseInt(pair[0].toString()));
                 IntWritable count = new IntWritable(Integer.parseInt(pair[1].toString()));
                 countList.add(Integer.parseInt(count.toString()));
-                countToTitleMap.add(new Pair<IntWritable, IntWritable>(count, link));
+                countToTitleMap.add(new Pair<IntWritable, IntWritable>(link, count));
             }
-            System.out.println(countToTitleMap.toString());
 
             for (Pair<IntWritable, IntWritable> item : countToTitleMap) {
                 int rank = 0;
@@ -187,7 +185,7 @@ public class PopularityLeague extends Configured implements Tool {
                         rank += 1;
                     }
                 }
-                context.write(item.second, new IntWritable(rank));
+                context.write(item.first, new IntWritable(rank));
             }
         }
 
