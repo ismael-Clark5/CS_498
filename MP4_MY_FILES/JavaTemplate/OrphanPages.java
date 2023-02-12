@@ -71,7 +71,6 @@ public class OrphanPages extends Configured implements Tool {
 
             leftSide.add(key);
             for(IntWritable val : values){
-                System.out.println(val.toString());
                 rightSide.add(val);
             }
 
@@ -80,6 +79,7 @@ public class OrphanPages extends Configured implements Tool {
                     difference.add(element);
                 }
             }
+            System.out.println(difference.toString());
             for(IntWritable element: difference){
                 context.write(element, NullWritable.get());
             }
