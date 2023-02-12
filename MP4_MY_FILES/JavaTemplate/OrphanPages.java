@@ -46,6 +46,7 @@ public class OrphanPages extends Configured implements Tool {
     }
 
     public static class LinkCountMap extends Mapper<Object, Text, IntWritable, IntWritable> {
+        private TreeSet<Pair<Integer, Integer>> countToTitleMap = new TreeSet<Pair<Integer, Integer>>()
         @Override
         public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
             String[] line = value.toString().trim().split(":");
@@ -53,11 +54,19 @@ public class OrphanPages extends Configured implements Tool {
             String[] links = line[1].trim().split(" ");
             for(int i = 1; i < links.length; i++){
                 if(!pageId.equals(links[i])){
-                    context.write(new IntWritable(Integer.parseInt(pageId)), new IntWritable(Integer.parseInt(links[i])));
+                    countToTitleMap.add(new Pair<Integer, Integer>(Integer.parseInt(pageId), Integer.parseInt(links[i])));
                 }
                 else{
-                    context.write(new IntWritable(Integer.parseInt(pageId)), new IntWritable(-1));
+                    countToTitleMap.add(new Pair<Integer, Integer>(Integer.parseInt(pageId), -1)));
                 }
+            }
+        }
+        @Override
+        protected void cleanup(Context context) throws IOException, InterruptedException {
+            for (Pair<Integer, Integer> item : countToTitleMap) {
+                Integer[] links = {item.second, item.first};
+                IntArrayWritable val = new IntArrayWritable(links) ;
+                context.write(NullWritable.get(), val);
             }
         }
     }
@@ -67,11 +76,13 @@ public class OrphanPages extends Configured implements Tool {
         private TreeSet <IntWritable> rightSide = new TreeSet<IntWritable>();
         private TreeSet<IntWritable> difference = new TreeSet<IntWritable>();
         @Override
-        public void reduce(IntWritable key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
+        public void reduce(NullWritable key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
 
-            leftSide.add(key);
+
             for(IntWritable val : values){
-                rightSide.add(val);
+                IntWritable[] pair =(IntWritable[]) val.toArray();
+                rightSide.add(new IntWritable(Integer.parseInt(pair[0].toString())));
+                leftSide.add(new IntWritable(Integer.parseInt(pair[1].toString())));
             }
 
             for(IntWritable element : leftSide){
@@ -83,5 +94,57 @@ public class OrphanPages extends Configured implements Tool {
                 context.write(element, NullWritable.get());
             }
         }
+    }
+}
+class Pair<A extends Comparable<? super A>,
+        B extends Comparable<? super B>>
+        implements Comparable<Pair<A, B>> {
+
+    public final A first;
+    public final B second;
+
+    public Pair(A first, B second) {
+        this.first = first;
+        this.second = second;
+    }
+
+    public static <A extends Comparable<? super A>,
+            B extends Comparable<? super B>>
+    Pair<A, B> of(A first, B second) {
+        return new Pair<A, B>(first, second);
+    }
+
+    @Override
+    public int compareTo(Pair<A, B> o) {
+        int cmp = o == null ? 1 : (this.first).compareTo(o.first);
+        return cmp == 0 ? (this.second).compareTo(o.second) : cmp;
+    }
+
+    @Override
+    public int hashCode() {
+        return 31 * hashcode(first) + hashcode(second);
+    }
+
+    private static int hashcode(Object o) {
+        return o == null ? 0 : o.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Pair))
+            return false;
+        if (this == obj)
+            return true;
+        return equal(first, ((Pair<?, ?>) obj).first)
+                && equal(second, ((Pair<?, ?>) obj).second);
+    }
+
+    private boolean equal(Object o1, Object o2) {
+        return o1 == o2 || (o1 != null && o1.equals(o2));
+    }
+
+    @Override
+    public String toString() {
+        return "(" + first + ", " + second + ')';
     }
 }
