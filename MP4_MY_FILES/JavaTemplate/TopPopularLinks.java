@@ -121,7 +121,6 @@ public class TopPopularLinks extends Configured implements Tool {
             for (IntWritable val : values){
                 sum += val.get();
             }
-            System.out.println(sum);
             context.write(new IntWritable(Integer.parseInt(key.toString())), new IntWritable(sum)); // pass this output to TopTitlesMap mapper
         }
     }
@@ -141,7 +140,6 @@ public class TopPopularLinks extends Configured implements Tool {
             if(countToTitleMap.size() > 10){
                 countToTitleMap.remove(countToTitleMap.first());
             }
-            System.out.println(countToTitleMap.toString());
         }
 
         @Override
@@ -165,8 +163,8 @@ public class TopPopularLinks extends Configured implements Tool {
             System.out.println(values.toString());
             for(IntArrayWritable val : values){
                 Integer[] pair =(Integer[]) val.toArray();
-                IntWritable link = new IntWritable(pair[0]);
-                IntWritable count = new IntWritable(pair[1]);
+                IntWritable link = pair[0];
+                IntWritable count = pair[1];
                 countToTitleMap.add(new Pair<IntWritable, IntWritable>(count, link));
                 if (countToTitleMap.size() > 10) {
                     countToTitleMap.remove(countToTitleMap.first());
