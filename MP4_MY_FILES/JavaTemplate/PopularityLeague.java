@@ -182,6 +182,8 @@ public class PopularityLeague extends Configured implements Tool {
             for (Pair<IntWritable, IntWritable> item : countToTitleMap) {
                 TreeSet<Integer> headSet = new TreeSet<Integer>();
                 headSet =  (TreeSet<Integer>)countSet.headSet(Integer.parseInt(item.first.toString()));
+                System.out.println(item.first.toString());
+                System.out.println(headSet.toString());
                 context.write(item.second, new IntWritable(headSet.size()));
             }
         }
