@@ -163,10 +163,10 @@ public class PopularityLeague extends Configured implements Tool {
             Configuration conf = context.getConfiguration();
         }
         public void reduce(NullWritable key, Iterable<IntArrayWritable> values, Context context) throws IOException, InterruptedException {
-            System.out.println(values.toString());
             for(IntArrayWritable val : values){
                 int rank = 0;
                 IntWritable[] pair =(IntWritable[]) val.toArray();
+                System.out.println(pair.toString());
                 IntWritable link = new IntWritable(Integer.parseInt(pair[0].toString()));
                 IntWritable count = new IntWritable(Integer.parseInt(pair[1].toString()));
                 for(IntArrayWritable val1 : values){
