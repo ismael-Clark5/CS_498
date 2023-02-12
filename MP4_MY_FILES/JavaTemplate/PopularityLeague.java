@@ -169,35 +169,14 @@ public class PopularityLeague extends Configured implements Tool {
         }
         public void reduce(NullWritable key, Iterable<IntArrayWritable> values, Context context) throws IOException, InterruptedException {
             Iterator<IntArrayWritable> mainIterator = values.iterator();
-            Iterator<IntArrayWritable> auxiliarIterator = values.iterator();
             while(mainIterator.hasNext()){
-                int rank = 0;
                 IntWritable[] pair =(IntWritable[]) mainIterator.next().toArray();
                 IntWritable link = new IntWritable(Integer.parseInt(pair[0].toString()));
                 IntWritable count = new IntWritable(Integer.parseInt(pair[1].toString()));
-                while(auxiliarIterator.hasNext()){
-                    IntWritable[] pairToCompare =(IntWritable[]) auxiliarIterator.next().toArray();
-                    IntWritable countToCompare = new IntWritable(Integer.parseInt(pairToCompare[1].toString()));
-                    if(count.compareTo(countToCompare) > 0){
-                        rank += 1;
-                    }
-                }
-                countToTitleMap.add(new Pair<IntWritable, IntWritable>(new IntWritable(rank), link));
+                countToTitleMap.add(new Pair<IntWritable, IntWritable>(count, link));
             }
-//            for(IntArrayWritable val : values){
-//                int rank = 0;
-//                IntWritable[] pair =(IntWritable[]) val.toArray();
-//                IntWritable link = new IntWritable(Integer.parseInt(pair[0].toString()));
-//                IntWritable count = new IntWritable(Integer.parseInt(pair[1].toString()));
-//                while(auxiliarList.hasNext()){
-//                    IntWritable[] pairToCompare =(IntWritable[]) auxiliarList.next().toArray();
-//                    IntWritable countToCompare = new IntWritable(Integer.parseInt(pairToCompare[1].toString()));
-//                    if(count.compareTo(countToCompare) > 0){
-//                        rank += 1;
-//                    }
-//                }
-//                countToTitleMap.add(new Pair<IntWritable, IntWritable>(new IntWritable(rank), link));
-//            }
+            System.out.println(countToTitleMap.toString());
+
             for (Pair<IntWritable, IntWritable> item : countToTitleMap) {
                 context.write(item.second, item.first);
             }
