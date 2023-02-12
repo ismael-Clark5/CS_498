@@ -180,7 +180,6 @@ public class PopularityLeague extends Configured implements Tool {
                     IntWritable countToCompare = new IntWritable(Integer.parseInt(pairToCompare[1].toString()));
                     if(count.compareTo(countToCompare) > 0){
                         rank += 1;
-
                     }
                 }
                 countToTitleMap.add(new Pair<IntWritable, IntWritable>(new IntWritable(rank), link));
