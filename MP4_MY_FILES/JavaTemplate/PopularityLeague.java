@@ -178,7 +178,7 @@ public class PopularityLeague extends Configured implements Tool {
                 countToTitleMap.add(new Pair<IntWritable, IntWritable>(link, count));
             }
 
-            for (Pair<IntWritable, IntWritable> item : countToTitleMap) {
+            for (Pair<IntWritable, IntWritable> item : countToTitleMap.descendingSet()) {
                 int rank = 0;
                 for (int count : countList){
                     if(count < Integer.parseInt(item.second.toString())){
