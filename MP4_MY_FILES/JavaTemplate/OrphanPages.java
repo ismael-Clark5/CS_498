@@ -44,7 +44,20 @@ public class OrphanPages extends Configured implements Tool {
         job.setJarByClass(OrphanPages.class);
         return job.waitForCompletion(true) ? 0 : 1;
     }
+    public static class IntArrayWritable extends ArrayWritable {
+        public IntArrayWritable() {
+            super(IntWritable.class);
+        }
 
+        public IntArrayWritable(Integer[] numbers) {
+            super(IntWritable.class);
+            IntWritable[] ints = new IntWritable[numbers.length];
+            for (int i = 0; i < numbers.length; i++) {
+                ints[i] = new IntWritable(numbers[i]);
+            }
+            set(ints);
+        }
+    }
     public static class LinkCountMap extends Mapper<Object, Text, IntWritable, IntWritable> {
         private TreeSet<Pair<Integer, Integer>> countToTitleMap = new TreeSet<Pair<Integer, Integer>>();
         @Override
