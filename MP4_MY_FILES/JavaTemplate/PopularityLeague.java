@@ -138,7 +138,7 @@ public class PopularityLeague extends Configured implements Tool {
         }
 
         public void map(Text key, Text value, Context context) throws IOException, InterruptedException {
-            System.out.println(league)
+            System.out.println(league);
             Integer count = Integer.parseInt(value.toString());
             Integer link = Integer.parseInt(key.toString());
             if(league.contains(link.toString())){
