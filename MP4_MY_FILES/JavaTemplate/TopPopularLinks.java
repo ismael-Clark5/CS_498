@@ -104,7 +104,6 @@ public class TopPopularLinks extends Configured implements Tool {
     public static class LinkCountMap extends Mapper<Object, Text, IntWritable, IntWritable> {
         @Override
         public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
-            System.out.println(value);
             String line = value.toString();
             String[] pairs = line.split(":");
             StringTokenizer linksTokens = new StringTokenizer(" ", pairs[1]);
@@ -122,6 +121,7 @@ public class TopPopularLinks extends Configured implements Tool {
             for (IntWritable val : values){
                 sum += val.get();
             }
+            System.out.println(sum);
             context.write(new IntWritable(Integer.parseInt(key.toString())), new IntWritable(sum)); // pass this output to TopTitlesMap mapper
         }
     }
@@ -141,6 +141,7 @@ public class TopPopularLinks extends Configured implements Tool {
             if(countToTitleMap.size() > 10){
                 countToTitleMap.remove(countToTitleMap.first());
             }
+            System.out.println(countToTitleMap.toString());
         }
 
         @Override
