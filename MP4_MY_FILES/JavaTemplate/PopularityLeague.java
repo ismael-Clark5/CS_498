@@ -175,7 +175,7 @@ public class PopularityLeague extends Configured implements Tool {
                 IntWritable count = new IntWritable(Integer.parseInt(pair[1].toString()));
                 while(auxiliarList.hasNext()){
                     IntWritable[] pairToCompare =(IntWritable[]) auxiliarList.next().toArray();
-                    IntWritable countToCompare = new IntWritable(Integer.parseInt(pairToCompare[1].toString()))
+                    IntWritable countToCompare = new IntWritable(Integer.parseInt(pairToCompare[1].toString()));
                     if(count.compareTo(countToCompare) > 0){
                         rank += 1;
                     }
