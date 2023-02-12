@@ -57,7 +57,7 @@ public class OrphanPages extends Configured implements Tool {
                     countToTitleMap.add(new Pair<Integer, Integer>(Integer.parseInt(pageId), Integer.parseInt(links[i])));
                 }
                 else{
-                    countToTitleMap.add(new Pair<Integer, Integer>(Integer.parseInt(pageId), -1)));
+                    countToTitleMap.add(new Pair<Integer, Integer>(Integer.parseInt(pageId), -1));
                 }
             }
         }
