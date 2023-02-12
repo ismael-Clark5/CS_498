@@ -169,7 +169,7 @@ public class PopularityLeague extends Configured implements Tool {
         }
         public void reduce(NullWritable key, Iterable<IntArrayWritable> values, Context context) throws IOException, InterruptedException {
             Iterator<IntArrayWritable> mainIterator = values.iterator();
-            SortedSet<Integer> countSet = new SortedSet<>();
+            TreeSet<Integer> countSet = new TreeSet<>();
             while(mainIterator.hasNext()){
                 IntWritable[] pair =(IntWritable[]) mainIterator.next().toArray();
                 IntWritable link = new IntWritable(Integer.parseInt(pair[0].toString()));
@@ -180,8 +180,8 @@ public class PopularityLeague extends Configured implements Tool {
             System.out.println(countToTitleMap.toString());
 
             for (Pair<IntWritable, IntWritable> item : countToTitleMap) {
-                SortedSet<Integer> headSet = new SortedSet<Integer>();
-                headSet = countSet.headSet(Integer.parseInt(item.first.toString()));
+                TreeSet<Integer> headSet = new TreeSet<Integer>();
+                headSet =  (TreeSet<Integer>)countSet.headSet(Integer.parseInt(item.first.toString()));
                 context.write(item.second, new IntWritable(headSet.size()));
             }
         }
