@@ -46,7 +46,7 @@ public class OrphanPages extends Configured implements Tool {
     }
 
     public static class LinkCountMap extends Mapper<Object, Text, IntWritable, IntWritable> {
-        private TreeSet<Pair<Integer, Integer>> countToTitleMap = new TreeSet<Pair<Integer, Integer>>()
+        private TreeSet<Pair<Integer, Integer>> countToTitleMap = new TreeSet<Pair<Integer, Integer>>();
         @Override
         public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
             String[] line = value.toString().trim().split(":");
