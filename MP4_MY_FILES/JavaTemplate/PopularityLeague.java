@@ -68,7 +68,7 @@ public class PopularityLeague extends Configured implements Tool {
         jobB.setInputFormatClass(KeyValueTextInputFormat.class);
         jobB.setOutputFormatClass(TextOutputFormat.class);
 
-        jobB.setJarByClass(TopPopularLinks.class);
+        jobB.setJarByClass(PopularityLeague.class);
         return jobB.waitForCompletion(true) ? 0 : 1;
     }
 
@@ -137,15 +137,10 @@ public class PopularityLeague extends Configured implements Tool {
             this.league = Arrays.asList(readHDFSFile(leaguePath, conf).split("\n"));
         }
 
-        @Override
-        protected void setup(Context context) throws IOException,InterruptedException {
-            Configuration conf = context.getConfiguration();
-        }
-
         public void map(Text key, Text value, Context context) throws IOException, InterruptedException {
             Integer count = Integer.parseInt(value.toString());
             Integer link = Integer.parseInt(key.toString());
-            if(league.contains(link.toString)){
+            if(league.contains(link.toString())){
                 countToTitleMap.add(new Pair<Integer, Integer>(count, link));
             }
         }
@@ -179,7 +174,7 @@ public class PopularityLeague extends Configured implements Tool {
                         rank += 1;
                     }
                 }
-                countToTitleMap.add(new Pair<IntWritable, IntWritable>(new IntWritable(Integer.parseInt(rank.toString())), link));
+                countToTitleMap.add(new Pair<IntWritable, IntWritable>(new IntWritable(rank), link));
             }
             for (Pair<IntWritable, IntWritable> item : countToTitleMap) {
                 context.write(item.second, item.first);
