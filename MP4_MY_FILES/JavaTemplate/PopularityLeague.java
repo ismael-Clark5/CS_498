@@ -167,18 +167,19 @@ public class PopularityLeague extends Configured implements Tool {
             Configuration conf = context.getConfiguration();
         }
         public void reduce(NullWritable key, Iterable<IntArrayWritable> values, Context context) throws IOException, InterruptedException {
+            Iterator<IntArrayWritable> auxiliarList = values.iterator();
             for(IntArrayWritable val : values){
                 int rank = 0;
                 IntWritable[] pair =(IntWritable[]) val.toArray();
                 IntWritable link = new IntWritable(Integer.parseInt(pair[0].toString()));
                 IntWritable count = new IntWritable(Integer.parseInt(pair[1].toString()));
-//                for(IntArrayWritable val1 : values){
-//                    IntWritable[] pair1 =(IntWritable[]) val1.toArray();
-//                    IntWritable count2 = new IntWritable(Integer.parseInt(pair1[1].toString()));
-//                    if(count.compareTo(count2) > 0){
-//                        rank += 1;
-//                    }
-//                }
+                while(auxiliarList.hasNext()){
+                    IntWritable[] pairToCompare =(IntWritable[]) auxiliarList.next().toArray();
+                    IntWritable countToCompare = new IntWritable(Integer.parseInt(pairToCompare[1].toString()))
+                    if(count.compareTo(countToCompare) > 0){
+                        rank += 1;
+                    }
+                }
                 countToTitleMap.add(new Pair<IntWritable, IntWritable>(new IntWritable(rank), link));
             }
             for (Pair<IntWritable, IntWritable> item : countToTitleMap) {
