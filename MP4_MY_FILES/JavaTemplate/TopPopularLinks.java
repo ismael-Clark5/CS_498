@@ -134,8 +134,8 @@ public class TopPopularLinks extends Configured implements Tool {
         }
 
         public void map(Text key, Text value, Context context) throws IOException, InterruptedException {
-            IntWritable count = new IntWritable(Integer.parseInt(value.toString()));
-            IntWritable link = new IntWritable(Integer.parseInt(key.toString()));
+            Integer count = Integer.parseInt(value.toString());
+            Integer link = Integer.parseInt(key.toString());
             countToTitleMap.add(new Pair<Integer, Integer>(count, link));
             if(countToTitleMap.size() > 10){
                 countToTitleMap.remove(countToTitleMap.first());
