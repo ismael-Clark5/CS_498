@@ -48,7 +48,7 @@ public class OrphanPages extends Configured implements Tool {
     public static class LinkCountMap extends Mapper<Object, Text, IntWritable, IntWritable> {
         @Override
         public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
-            String[] line = value.toString().split(":");
+            String[] line = value.toString().trim().split(":");
             String pageId = line[0];
             String[] links = line[1].trim().split(" ");
             for(int i = 1; i < links.length; i++){
