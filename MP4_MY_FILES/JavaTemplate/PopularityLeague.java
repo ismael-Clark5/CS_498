@@ -181,7 +181,7 @@ public class PopularityLeague extends Configured implements Tool {
             for (Pair<IntWritable, IntWritable> item : countToTitleMap) {
                 int rank = 0;
                 for (int count : countList){
-                    if(count < Integer.parseInt(item.first.toString())){
+                    if(count < Integer.parseInt(item.second.toString())){
                         rank += 1;
                     }
                 }
