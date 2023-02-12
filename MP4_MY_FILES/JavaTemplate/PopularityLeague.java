@@ -170,19 +170,17 @@ public class PopularityLeague extends Configured implements Tool {
             for(IntArrayWritable val : values){
                 int rank = 0;
                 IntWritable[] pair =(IntWritable[]) val.toArray();
-                System.out.println(pair.toString());
                 IntWritable link = new IntWritable(Integer.parseInt(pair[0].toString()));
                 IntWritable count = new IntWritable(Integer.parseInt(pair[1].toString()));
-                for(IntArrayWritable val1 : values){
-                    IntWritable[] pair1 =(IntWritable[]) val1.toArray();
-                    IntWritable count2 = new IntWritable(Integer.parseInt(pair1[1].toString()));
-                    if(count.compareTo(count2) > 0){
-                        rank += 1;
-                    }
-                }
+//                for(IntArrayWritable val1 : values){
+//                    IntWritable[] pair1 =(IntWritable[]) val1.toArray();
+//                    IntWritable count2 = new IntWritable(Integer.parseInt(pair1[1].toString()));
+//                    if(count.compareTo(count2) > 0){
+//                        rank += 1;
+//                    }
+//                }
                 countToTitleMap.add(new Pair<IntWritable, IntWritable>(new IntWritable(rank), link));
             }
-            System.out.println(countToTitleMap.toString());
             for (Pair<IntWritable, IntWritable> item : countToTitleMap) {
                 context.write(item.second, item.first);
             }
