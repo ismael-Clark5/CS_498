@@ -27,6 +27,7 @@ import java.util.TreeSet;
 import java.util.List;
 import java.lang.Integer;
 import java.util.StringTokenizer;
+import java.util.Iterator;
 
 public class PopularityLeague extends Configured implements Tool {
 
