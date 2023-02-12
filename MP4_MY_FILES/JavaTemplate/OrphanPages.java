@@ -33,8 +33,8 @@ public class OrphanPages extends Configured implements Tool {
         job.setOutputKeyClass(IntWritable.class);
         job.setOutputValueClass(NullWritable.class);
 
-        jobB.setMapOutputKeyClass(NullWritable.class);
-        jobB.setMapOutputValueClass(IntArrayWritable.class);
+        job.setMapOutputKeyClass(NullWritable.class);
+        job.setMapOutputValueClass(IntArrayWritable.class);
 
         job.setMapperClass(LinkCountMap.class);
         job.setReducerClass(OrphanPageReduce.class);
@@ -85,7 +85,7 @@ public class OrphanPages extends Configured implements Tool {
         }
     }
 
-    public static class OrphanPageReduce extends Reducer<IntWritable, IntWritable, IntWritable, NullWritable> {
+    public static class OrphanPageReduce extends Reducer<NullWritable, IntArrayWritable, IntWritable, IntWritable> {
         private TreeSet <IntWritable> leftSide = new TreeSet<IntWritable>();
         private TreeSet <IntWritable> rightSide = new TreeSet<IntWritable>();
         private TreeSet<IntWritable> difference = new TreeSet<IntWritable>();
