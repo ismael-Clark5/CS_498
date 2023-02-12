@@ -138,6 +138,7 @@ public class PopularityLeague extends Configured implements Tool {
         }
 
         public void map(Text key, Text value, Context context) throws IOException, InterruptedException {
+            System.out.println(league)
             Integer count = Integer.parseInt(value.toString());
             Integer link = Integer.parseInt(key.toString());
             if(league.contains(link.toString())){
@@ -147,11 +148,13 @@ public class PopularityLeague extends Configured implements Tool {
 
         @Override
         protected void cleanup(Context context) throws IOException, InterruptedException {
+            System.out.println(league);
             for (Pair<Integer, Integer> item : countToTitleMap) {
                 Integer[] links = {item.second, item.first};
                 IntArrayWritable val = new IntArrayWritable(links) ;
                 context.write(NullWritable.get(), val);
             }
+            System.out.println(countToTitleMap);
         }
     }
     public static class PopularityLeagueReduce extends Reducer<NullWritable, IntArrayWritable, IntWritable, IntWritable> {
