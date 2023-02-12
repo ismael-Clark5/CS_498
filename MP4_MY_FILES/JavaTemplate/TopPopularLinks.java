@@ -52,7 +52,7 @@ public class TopPopularLinks extends Configured implements Tool {
         jobA.setJarByClass(TopPopularLinks.class);
         jobA.waitForCompletion(true);
 
-        Job jobB = Job.getInstance(conf, "Top Links");
+        Job jobB = Job.getInstance(conf, "Top Popular Links");
         jobB.setOutputKeyClass(Text.class);
         jobB.setOutputValueClass(Text.class);
 
