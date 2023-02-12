@@ -48,7 +48,7 @@ public class PopularityLeague extends Configured implements Tool {
         FileInputFormat.setInputPaths(jobA, new Path(args[0]));
         FileOutputFormat.setOutputPath(jobA, tmpPath);
 
-        jobA.setJarByClass(TopPopularLinks.class);
+        jobA.setJarByClass(PopularityLeague.class);
         jobA.waitForCompletion(true);
 
         Job jobB = Job.getInstance(conf, "Popularity League");
@@ -170,7 +170,7 @@ public class PopularityLeague extends Configured implements Tool {
                 IntWritable count = new IntWritable(Integer.parseInt(pair[1].toString()));
                 for(IntArrayWritable val : values){
                     IntWritable count2 = new IntWritable(Integer.parseInt(pair[1].toString()));
-                    if(count > count2){
+                    if(count.compareTo(count2) > 0){
                         rank += 1;
                     }
                 }
