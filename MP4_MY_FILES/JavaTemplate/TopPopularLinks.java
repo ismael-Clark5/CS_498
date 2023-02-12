@@ -162,7 +162,7 @@ public class TopPopularLinks extends Configured implements Tool {
         public void reduce(NullWritable key, Iterable<IntArrayWritable> values, Context context) throws IOException, InterruptedException {
             System.out.println(values.toString());
             for(IntArrayWritable val : values){
-                Integer[] pair =(Integer[]) val.toArray();
+                IntWritable[] pair =(IntWritable[]) val.toArray();
                 IntWritable link = new IntWritable(Integer.parseInt(pair[0].toString()));
                 IntWritable count = new IntWritable(Integer.parseInt(pair[1].toString()));
                 countToTitleMap.add(new Pair<IntWritable, IntWritable>(count, link));
