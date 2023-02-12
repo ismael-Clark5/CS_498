@@ -174,7 +174,7 @@ public class PopularityLeague extends Configured implements Tool {
                 IntWritable[] pair =(IntWritable[]) mainIterator.next().toArray();
                 IntWritable link = new IntWritable(Integer.parseInt(pair[0].toString()));
                 IntWritable count = new IntWritable(Integer.parseInt(pair[1].toString()));
-                countSet.add(count);
+                countSet.add(Integer.parseInt(count.toString()));
                 countToTitleMap.add(new Pair<IntWritable, IntWritable>(count, link));
             }
             System.out.println(countToTitleMap.toString());
