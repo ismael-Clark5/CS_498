@@ -63,8 +63,8 @@ public class OrphanPages extends Configured implements Tool {
     }
 
     public static class OrphanPageReduce extends Reducer<IntWritable, IntWritable, IntWritable, NullWritable> {
-        private TreeSet <IntWritable> leftSide = new TreeSet<IntWritable>();
-        private TreeSet <IntWritable> rightSide = new TreeSet<IntWritable>();
+        private List <IntWritable> leftSide = new ArrayList<>();
+        private List <IntWritable> rightSide = new ArrayList<>();
         private TreeSet<IntWritable> difference = new TreeSet<IntWritable>();
         @Override
         public void reduce(IntWritable key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
@@ -79,7 +79,6 @@ public class OrphanPages extends Configured implements Tool {
                     difference.add(element);
                 }
             }
-            System.out.println(difference.toString());
             for(IntWritable element: difference){
                 context.write(element, NullWritable.get());
             }
