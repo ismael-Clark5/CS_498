@@ -76,6 +76,7 @@ public class OrphanPages extends Configured implements Tool {
                 rightSide.add(val);
                 count ++;
             }
+            System.out.println("Key: " + key.toString());
             System.out.println(count);
 
             for(IntWritable element : leftSide){
