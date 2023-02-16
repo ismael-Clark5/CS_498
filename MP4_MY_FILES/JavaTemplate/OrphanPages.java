@@ -100,9 +100,9 @@ public class OrphanPages extends Configured implements Tool {
         private TreeSet<IntWritable> difference = new TreeSet<IntWritable>();
         @Override
         public void reduce(NullWritable key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
-
-            for(IntWritable val : values){
-                IntWritable[] pair =(IntWritable[]) val.toArray();
+            Iterator<IntArrayWritable> mainIterator = values.iterator();
+            while(mainIterator.hasNext()){
+                IntWritable[] pair =(IntWritable[]) val.next().toArray();
                 IntWritable pageId = new IntWritable(Integer.parseInt(pair[0].toString()));
                 IntWritable linksTo = new IntWritable(Integer.parseInt(pair[1].toString()));
                 leftSide.add(pageId);
