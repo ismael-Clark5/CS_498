@@ -101,7 +101,7 @@ public class OrphanPages extends Configured implements Tool {
         @Override
         protected void setup(Context context) throws IOException,InterruptedException {
             Configuration conf = context.getConfiguration();
-        } 
+        }
         @Override
         public void reduce(NullWritable key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
             Iterator<IntArrayWritable> mainIterator = values.iterator();
