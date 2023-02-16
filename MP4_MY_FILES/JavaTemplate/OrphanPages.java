@@ -83,8 +83,7 @@ public class OrphanPages extends Configured implements Tool {
                 }
             }
         }
-
-
+        @Override
         protected void cleanup(Context context) throws IOException, InterruptedException {
             for (Pair<Integer, Integer> item : countToTitleMap) {
                 Integer[] links = {item.second, item.first};
@@ -94,10 +93,11 @@ public class OrphanPages extends Configured implements Tool {
         }
     }
 
-    public static class OrphanPageReduce extends Reducer<IntWritable, IntWritable, IntWritable, NullWritable> {
+    public static class OrphanPageReduce extends Reducer<NullWritable, IntArrayWritable, IntWritable, NullWritable> {
         private TreeSet <IntWritable> leftSide = new TreeSet<IntWritable>();
         private TreeSet <IntWritable> rightSide = new TreeSet<IntWritable>();
         private TreeSet<IntWritable> difference = new TreeSet<IntWritable>();
+
         @Override
         public void reduce(NullWritable key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
             Iterator<IntArrayWritable> mainIterator = values.iterator();
