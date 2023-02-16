@@ -71,9 +71,12 @@ public class OrphanPages extends Configured implements Tool {
         public void reduce(IntWritable key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
 
             leftSide.add(key);
+            int count = 0;
             for(IntWritable val : values){
                 rightSide.add(val);
+                count ++;
             }
+            System.out.println(count);
 
             for(IntWritable element : leftSide){
                 if(!rightSide.contains(element)){
