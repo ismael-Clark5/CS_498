@@ -84,7 +84,7 @@ public class OrphanPages extends Configured implements Tool {
             }
         }
 
-        @Override
+
         protected void cleanup(Context context) throws IOException, InterruptedException {
             for (Pair<Integer, Integer> item : countToTitleMap) {
                 Integer[] links = {item.second, item.first};
@@ -102,7 +102,7 @@ public class OrphanPages extends Configured implements Tool {
         public void reduce(NullWritable key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
             Iterator<IntArrayWritable> mainIterator = values.iterator();
             while(mainIterator.hasNext()){
-                IntWritable[] pair =(IntWritable[]) val.next().toArray();
+                IntWritable[] pair =(IntWritable[]) mainIterator.next().toArray();
                 IntWritable pageId = new IntWritable(Integer.parseInt(pair[0].toString()));
                 IntWritable linksTo = new IntWritable(Integer.parseInt(pair[1].toString()));
                 leftSide.add(pageId);
