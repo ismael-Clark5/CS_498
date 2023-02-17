@@ -41,7 +41,7 @@ public class OrphanPages extends Configured implements Tool {
 
         FileInputFormat.setInputPaths(job, new Path(args[0]));
         FileOutputFormat.setOutputPath(job, new Path(args[1]));
-
+        job.
         job.setJarByClass(OrphanPages.class);
         return job.waitForCompletion(true) ? 0 : 1;
     }
@@ -66,7 +66,7 @@ public class OrphanPages extends Configured implements Tool {
     public static class OrphanPageReduce extends Reducer<IntWritable, IntWritable, IntWritable, NullWritable> {
         private TreeSet <IntWritable> leftSide = new TreeSet<>();
         private TreeSet <IntWritable> rightSide = new TreeSet<>();
-        private TreeSet<IntWritable> difference = new TreeSet<>();
+        private Set<IntWritable> difference = new HashSet<>();
         @Override
         protected void setup(Context context) throws IOException,InterruptedException {
             Configuration conf = context.getConfiguration();
@@ -87,7 +87,6 @@ public class OrphanPages extends Configured implements Tool {
 
         @Override
         protected void cleanup(Context context) throws IOException, InterruptedException {
-
             for(IntWritable element: difference){
                context.write(element, NullWritable.get());
             }
