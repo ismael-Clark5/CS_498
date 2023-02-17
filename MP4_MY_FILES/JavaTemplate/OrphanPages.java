@@ -80,7 +80,6 @@ public class OrphanPages extends Configured implements Tool {
             }
             for(IntWritable element : leftSide){
                 if(!rightSide.contains(element)){
-                    System.out.println("Ismael");
                     difference.add(element);
                 }
             }
