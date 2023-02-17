@@ -70,7 +70,8 @@ public class OrphanPages extends Configured implements Tool {
         protected void setup(Context context) throws IOException,InterruptedException {
             Configuration conf = context.getConfiguration();
         }
-        
+
+        @Override
         public void reduce(IntWritable key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
             leftSide.add(key);
             for(IntWritable val : values){
@@ -78,16 +79,10 @@ public class OrphanPages extends Configured implements Tool {
             }
             for(IntWritable element : leftSide){
                 if(!rightSide.contains(element)){
-                    difference.add(element);
+                    context.write(element, NullWritable.get());
                 }
             }
         }
 
-        @Override
-        protected void cleanup(Context context) throws IOException, InterruptedException {
-            for(IntWritable element: difference){
-               context.write(element, NullWritable.get());
-            }
-        }
     }
 }
