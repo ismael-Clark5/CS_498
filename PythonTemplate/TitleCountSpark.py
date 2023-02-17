@@ -27,7 +27,7 @@ outputFile = open(sys.argv[4],"w")
 for finalWord in top10Lists:
     word = finalWord[0]
     count = finalWord[1]
-    outputFile.write(word + " " + count + "\n")
+    outputFile.write(word + " " + str(count) + "\n")
 
 #TODO
 #write results to output file. Foramt for each line: (line +"\n")
