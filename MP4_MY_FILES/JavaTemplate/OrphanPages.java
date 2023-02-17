@@ -76,7 +76,7 @@ public class OrphanPages extends Configured implements Tool {
 
             leftSide.add(Integer.parseInt(key.toString()));
             for(IntWritable val : values){
-                rightSide.add(Integer.parseInt(val.toString());
+                rightSide.add(Integer.parseInt(val.toString()));
             }
 
             for(Integer element : leftSide){
