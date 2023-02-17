@@ -65,7 +65,7 @@ public class OrphanPages extends Configured implements Tool {
     public static class OrphanPageReduce extends Reducer<IntWritable, IntWritable, IntWritable, NullWritable> {
         private TreeSet <IntWritable> leftSide = new TreeSet<>();
         private TreeSet <IntWritable> rightSide = new TreeSet<>();
-        private Set<IntWritable> difference = new HashSet<>();
+        private TreeSet<IntWritable> difference = new TreeSet<>();
         @Override
         protected void setup(Context context) throws IOException,InterruptedException {
             Configuration conf = context.getConfiguration();
