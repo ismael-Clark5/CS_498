@@ -27,7 +27,8 @@ for line in lines:
             actualWords.append(word)
 
 wordCounts = actualWords.map(lambda word: (word, 1)).reduceByKey(lambda a,b:a +b)
-print(wordCounts)
+top10Lists = wordCounts.sortBy(lambda x :(-x[1], x[0])).collect().cahce().take(10)
+print(top10Lists)
 outputFile = open(sys.argv[4],"w")
 
 #TODO
