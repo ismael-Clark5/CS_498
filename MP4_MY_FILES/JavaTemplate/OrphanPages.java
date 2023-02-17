@@ -74,7 +74,7 @@ public class OrphanPages extends Configured implements Tool {
         @Override
         public void reduce(IntWritable key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
 
-            leftSide.add(Integer.parseInt(key.toString());
+            leftSide.add(Integer.parseInt(key.toString()));
             for(IntWritable val : values){
                 rightSide.add(Integer.parseInt(val));
             }
