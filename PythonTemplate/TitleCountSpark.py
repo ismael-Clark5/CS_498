@@ -21,6 +21,7 @@ sc = SparkContext(conf=conf)
 lines = sc.textFile(sys.argv[3], 1)
 print(stopWords)
 print(delimiters)
+print(lines)
 #TODO
 
 outputFile = open(sys.argv[4],"w")
