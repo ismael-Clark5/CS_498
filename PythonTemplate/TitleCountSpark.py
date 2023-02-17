@@ -25,7 +25,9 @@ wordCounts = words.map(lambda word: (word, 1) if (word not in stopwords) else No
 top10Lists = wordCounts.sortBy(lambda x :(-x[1], x[0])).cache().take(10)
 outputFile = open(sys.argv[4],"w")
 for finalWord in top10Lists:
-    outputFile.write(finalWord)
+    word = finalWord[0]
+    count = finalWord[1]
+    outputFile.write(word + " " + count + "\n")
 
 #TODO
 #write results to output file. Foramt for each line: (line +"\n")
