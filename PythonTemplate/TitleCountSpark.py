@@ -27,9 +27,9 @@ for line in lines:
             actualWords.append(word)
 
 wordCounts = actualWords.map(lambda word: (word, 1)).reduceByKey(lambda a,b:a +b)
+print(wordCounts)
 outputFile = open(sys.argv[4],"w")
-for wordCount in wordCounts:
-    outputFile.write(wordCount + '\n')
+
 #TODO
 #write results to output file. Foramt for each line: (line +"\n")
 
