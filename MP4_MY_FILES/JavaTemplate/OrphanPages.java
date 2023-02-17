@@ -87,7 +87,7 @@ public class OrphanPages extends Configured implements Tool {
 
         @Override
         protected void cleanup(Context context) throws IOException, InterruptedException {
-            context.write(new IntWritable(difference.size()), NullWritable.get())
+            context.write(new IntWritable(difference.size()), NullWritable.get());
 //            for(IntWritable element: difference){
 //               context.write(element, NullWritable.get());
 //            }
