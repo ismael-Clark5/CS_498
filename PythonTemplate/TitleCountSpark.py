@@ -9,21 +9,27 @@ stopWordsPath = sys.argv[1]
 delimitersPath = sys.argv[2]
 
 with open(stopWordsPath) as f:
-	#TODO
+	stopwords = f.read()
 
 with open(delimitersPath) as f:
-    #TODO
+    delimiters = f.read()
 
 conf = SparkConf().setMaster("local").setAppName("TitleCount")
 conf.set("spark.driver.bindAddress", "127.0.0.1")
 sc = SparkContext(conf=conf)
 
 lines = sc.textFile(sys.argv[3], 1)
+actualWords = []
+for line in lines:
+    words = line.strip().split(delimiters)
+    for word in words:
+        if word not in stopwords:
+            actualWords.append(word)
 
-#TODO
-
+wordCounts = actualWords.map(lambda word: (word, 1)).reduceByKey(lambda a,b:a +b)
 outputFile = open(sys.argv[4],"w")
-
+for wordCount in wordCounts:
+    outputFile.write(wordCount + '\n')
 #TODO
 #write results to output file. Foramt for each line: (line +"\n")
 
