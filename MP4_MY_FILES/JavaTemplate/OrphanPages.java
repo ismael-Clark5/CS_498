@@ -84,7 +84,7 @@ public class OrphanPages extends Configured implements Tool {
                     difference.add(new IntWritable(element));
                 }
             }
-            System.out.println(difference.toString());
+            System.out.println(difference.size());
             for(IntWritable element: difference){
                 context.write(element, NullWritable.get());
             }
