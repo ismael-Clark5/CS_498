@@ -9,17 +9,18 @@ stopWordsPath = sys.argv[1]
 delimitersPath = sys.argv[2]
 
 with open(stopWordsPath) as f:
-	#TODO
+	stopWords = f.read()
 
 with open(delimitersPath) as f:
-    #TODO
+	delimiters = f.read()
 
 conf = SparkConf().setMaster("local").setAppName("TitleCount")
 conf.set("spark.driver.bindAddress", "127.0.0.1")
 sc = SparkContext(conf=conf)
 
 lines = sc.textFile(sys.argv[3], 1)
-
+print(stopWords)
+print(delimiters)
 #TODO
 
 outputFile = open(sys.argv[4],"w")
