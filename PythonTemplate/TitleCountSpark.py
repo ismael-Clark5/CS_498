@@ -19,14 +19,9 @@ conf.set("spark.driver.bindAddress", "127.0.0.1")
 sc = SparkContext(conf=conf)
 
 lines = sc.textFile(sys.argv[3], 1)
-actualWords = []
-for line in lines:
-    words = line.strip().split(delimiters)
-    for word in words:
-        if word not in stopwords:
-            actualWords.append(word)
+words = lines.flatMap(lambda line: line.split(delimiters))
 
-wordCounts = actualWords.map(lambda word: (word, 1)).reduceByKey(lambda a,b:a +b)
+wordCounts = words.map(lambda word: (word, 1) if (word not in stopwords) else None).reduceByKey(lambda a,b:a +b)
 top10Lists = wordCounts.sortBy(lambda x :(-x[1], x[0])).collect().cahce().take(10)
 print(top10Lists)
 outputFile = open(sys.argv[4],"w")
