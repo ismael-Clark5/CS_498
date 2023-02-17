@@ -82,7 +82,7 @@ public class OrphanPages extends Configured implements Tool {
 
             for(IntWritable element : leftSide){
                 if(!rightSide.contains(element)){
-                    difference.add(new IntWritable(element));
+                    difference.add(element);
                 }
             }
             for(IntWritable element: difference){
