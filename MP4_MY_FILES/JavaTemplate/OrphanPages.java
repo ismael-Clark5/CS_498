@@ -41,7 +41,6 @@ public class OrphanPages extends Configured implements Tool {
 
         FileInputFormat.setInputPaths(job, new Path(args[0]));
         FileOutputFormat.setOutputPath(job, new Path(args[1]));
-        job.
         job.setJarByClass(OrphanPages.class);
         return job.waitForCompletion(true) ? 0 : 1;
     }
