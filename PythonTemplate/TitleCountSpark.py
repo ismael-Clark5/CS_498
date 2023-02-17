@@ -22,10 +22,10 @@ lines = sc.textFile(sys.argv[3], 1)
 words = lines.flatMap(lambda line: line.split(delimiters))
 
 wordCounts = words.map(lambda word: (word, 1) if (word not in stopwords) else None).reduceByKey(lambda a,b:a +b)
-top10Lists = wordCounts.sortBy(lambda x :(-x[1], x[0])).collect().cahce().take(10)
+top10Lists = wordCounts.sortBy(lambda x :(-x[1], x[0])).cahce().take(10)
 outputFile = open(sys.argv[4],"w")
 for finalWord in top10Lists:
-    outputFile.write(finalWord)
+    outputFile.write(finalWord + "\n")
 
 #TODO
 #write results to output file. Foramt for each line: (line +"\n")
