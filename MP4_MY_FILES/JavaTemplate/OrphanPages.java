@@ -68,21 +68,20 @@ public class OrphanPages extends Configured implements Tool {
         protected void setup(Context context) throws IOException,InterruptedException {
             Configuration conf = context.getConfiguration();
         }
-        private TreeSet <IntWritable> leftSide = new TreeSet<IntWritable>();
-        private TreeSet <IntWritable> rightSide = new TreeSet<IntWritable>();
+        private TreeSet <Integer> leftSide = new TreeSet<Integer>();
+        private TreeSet <Integer> rightSide = new TreeSet<Integer>();
         private TreeSet<IntWritable> difference = new TreeSet<IntWritable>();
         @Override
         public void reduce(IntWritable key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
 
-            leftSide.add(key);
+            leftSide.add(Integer.parseInt(key.toString());
             for(IntWritable val : values){
-                rightSide.add(val);
+                rightSide.add(Integer.parseInt(val));
             }
 
-            for(IntWritable element : leftSide){
-                System.out.println(!rightSide.contains(element));
+            for(Integer element : leftSide){
                 if(!rightSide.contains(element)){
-                    difference.add(element);
+                    difference.add(new IntWritable(element));
                 }
             }
             for(IntWritable element: difference){
