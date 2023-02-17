@@ -52,7 +52,7 @@ public class OrphanPages extends Configured implements Tool {
             String[] line = value.toString().trim().split(":");
             String pageId = line[0];
             String[] links = line[1].trim().split(" ");
-            for(int i = 1; i < links.length; i++){
+            for(int i = 0; i < links.length; i++){
                 if(!pageId.equals(links[i])){
                     context.write(new IntWritable(Integer.parseInt(pageId)), new IntWritable(Integer.parseInt(links[i])));
                 }
@@ -64,8 +64,8 @@ public class OrphanPages extends Configured implements Tool {
     }
 
     public static class OrphanPageReduce extends Reducer<IntWritable, IntWritable, IntWritable, NullWritable> {
-        private TreeSet <String> leftSide = new TreeSet<>();
-        private TreeSet <String> rightSide = new TreeSet<>();
+        private TreeSet <IntWritable> leftSide = new TreeSet<>();
+        private TreeSet <IntWritable> rightSide = new TreeSet<>();
         private TreeSet<IntWritable> difference = new TreeSet<>();
         @Override
         protected void setup(Context context) throws IOException,InterruptedException {
@@ -75,14 +75,14 @@ public class OrphanPages extends Configured implements Tool {
         @Override
         public void reduce(IntWritable key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
 
-            leftSide.add(key.toString());
+            leftSide.add(key);
             for(IntWritable val : values){
-                rightSide.add(val.toString());
+                rightSide.add(val);
             }
 
-            for(String element : leftSide){
+            for(IntWritable element : leftSide){
                 if(!rightSide.contains(element)){
-                    difference.add(new IntWritable(Integer.parseInt(element)));
+                    difference.add(new IntWritable(element));
                 }
             }
             for(IntWritable element: difference){
