@@ -74,12 +74,14 @@ public class OrphanPages extends Configured implements Tool {
 
         @Override
         public void reduce(IntWritable key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
-
             leftSide.add(key);
             for(IntWritable val : values){
                 rightSide.add(val);
             }
+        }
 
+        @Override
+        protected void cleanup(Context context) throws IOException, InterruptedException {
             for(IntWritable element : leftSide){
                 if(!rightSide.contains(element)){
                     difference.add(element);
