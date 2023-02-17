@@ -70,8 +70,7 @@ public class OrphanPages extends Configured implements Tool {
         protected void setup(Context context) throws IOException,InterruptedException {
             Configuration conf = context.getConfiguration();
         }
-
-        @Override
+        
         public void reduce(IntWritable key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
             leftSide.add(key);
             for(IntWritable val : values){
