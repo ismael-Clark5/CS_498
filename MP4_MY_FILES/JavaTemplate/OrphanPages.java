@@ -89,7 +89,7 @@ public class OrphanPages extends Configured implements Tool {
         protected void cleanup(Context context) throws IOException, InterruptedException {
 
             for(IntWritable element: difference){
-               context.write(NullWritable.get(), element);
+               context.write(element, NullWritable.get());
             }
         }
     }
