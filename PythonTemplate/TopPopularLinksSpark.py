@@ -9,7 +9,7 @@ sc = SparkContext(conf=conf)
 lines = sc.textFile(sys.argv[1], 100)
 linksTo =  lines.map(lambda line: line.strip().split(":")[1])
 linksTo = linksTo.flatMap(lambda line: line.strip().split(" "))
-linkCounts = sorted(linksTo.map(lambda word: (word, 1)).reduceByKey(lambda a,b:a +b).sortBy(lambda x : (-x[1], x[0])).take(10), lambda x: x[0])
+linkCounts = linksTo.map(lambda word: (word, 1)).reduceByKey(lambda a,b:a +b).sortBy(lambda x : (-x[1], x[0])).take(10), lambda x: x[0]
 output = open(sys.argv[2], "w")
 for finalWord in linkCounts:
     word = finalWord[0]
