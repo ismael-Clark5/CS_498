@@ -22,10 +22,11 @@ stopWordsPath = sys.argv[1]
 delimitersPath = sys.argv[2]
 
 with open(stopWordsPath) as f:
-    stopwords = f.read()
+    stopwords = [line.rstrip('\n') for line in f]
 
 with open(delimitersPath) as f:
-    delimiters = str(f.read())
+    for line in f:
+        delimiters = line
 
 conf = SparkConf().setMaster("local").setAppName("TitleCount")
 conf.set("spark.driver.bindAddress", "127.0.0.1")
@@ -33,7 +34,8 @@ sc = SparkContext(conf=conf)
 
 delimiters = process_delimiters(delimiters)
 lines = sc.textFile(sys.argv[3], 1)
-words = lines.flatMap(lambda line: re.split(delimiters, line.lower().strip()))
+delimiterAsRe = re.compile('[' + re.escape(delimiters) + ']')
+words = lines.flatMap(lambda line: delimiterAsRe.split(line.lower().strip()))
 wordCounts = words.filter(lambda x: x not in stopwords).map(lambda word: (word, 1)).reduceByKey(lambda a,b:a +b).sortBy(lambda x : (-x[1], x[0])).take(10)
 
 outputFile = open(sys.argv[4],"w")
