@@ -34,7 +34,7 @@ sc = SparkContext(conf=conf)
 delimiters = process_delimiters(delimiters)
 lines = sc.textFile(sys.argv[3], 1)
 words = lines.flatMap(lambda line: re.split(delimiters, line.lower().strip()))
-wordCounts = words.map(lambda word: (word, 1) if(word not in stopwords) else "").reduceByKey(lambda a,b:a +b).sortBy(lambda x : (-x[1], x[0]) if(x != "") else None).take(10)
+wordCounts = words.map(lambda word: (word, 1)).reduceByKey(lambda a,b:a +b).sortBy(lambda x : (-x[1], x[0])).take(10)
 
 outputFile = open(sys.argv[4],"w")
 for finalWord in wordCounts:
