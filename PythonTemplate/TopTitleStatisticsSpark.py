@@ -14,9 +14,9 @@ words = lines.flatMap(lambda line: line.split(" ")).filter(lambda x : x.isnumeri
 minimum = words.reduce(lambda a, b : min(int(a), int(b)))
 maximum = words.reduce(lambda a,b : max(int(a), int(b)))
 sum = words.reduce(lambda a, b :(int(a) + int(b)))
-mean = math.floor(sum / words.count())
+mean = int(sum / words.count())
 var = words.map(lambda a: math.floor(pow((int(a) - mean), 2)))
-var = math.floor((var.reduce(lambda a, b :int((int(a) + int(b))) / words.count())))
+var = var.reduce(lambda a, b :(int(a) + int(b))) / words.count()
 
 outputFile = open(sys.argv[2], "w")
 outputFile.write('Sum\t%s\n' % sum)
