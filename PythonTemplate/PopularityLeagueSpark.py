@@ -16,7 +16,7 @@ linkCounts = linksTo.map(lambda word: (word, 1)).reduceByKey(lambda a,b:a +b)
 
 leagueIds = sc.textFile(sys.argv[2], 1)
 leagueIdsAsList = leagueIds.collect()
-linksInLeague = sorted(linkCounts.filter(lambda link: link[0] in leagueIdsAsList).collect(), key=lambda x: x[0], reverse=True)
+linksInLeague = sorted(linkCounts.filter(lambda link: link[0] in leagueIdsAsList).collect(), key=lambda x: x[0])
 output = open(sys.argv[3], "w")
 for linkData in linksInLeague:
     linkCount = linkData[1]
