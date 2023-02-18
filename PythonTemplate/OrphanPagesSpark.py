@@ -7,8 +7,8 @@ conf.set("spark.driver.bindAddress", "127.0.0.1")
 sc = SparkContext(conf=conf)
 
 lines = sc.textFile(sys.argv[1], 100)
-pageIds = lines.flatMap(lambda line: line.strip().split(":")[0])
-linksTo =  lines.flatMap(lambda line: line.strip().split(":")[1])
+pageIds = lines.map(lambda line: line.strip().split(":")[0])
+linksTo =  lines.map(lambda line: line.strip().split(":")[1])
 linksTo = linksTo.flatMap(lambda line: line.strip().split(" "))
 
 pageIdsAsSet = set(pageIds.collect())
