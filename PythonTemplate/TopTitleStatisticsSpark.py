@@ -8,7 +8,7 @@ sc = SparkContext(conf=conf)
 
 lines = sc.textFile(sys.argv[1], 1)
 
-words = lines.flatMap(lambda line: line.split(" "))
+words = lines.flatMap(lambda line: line.split(" ")).filter(lambda x : x.isnumeric())
 words.saveAsTextFile("./output")
 outputFile = open(sys.argv[2], "w")
 '''
