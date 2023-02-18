@@ -14,7 +14,7 @@ output = open(sys.argv[2], "w")
 for finalWord in linkCounts:
     word = finalWord[0]
     count = finalWord[1]
-    linkCounts.write(word + " " + str(count) + "\n")
+    output.write(word + " " + str(count) + "\n")
 
 sc.stop()
 
