@@ -19,10 +19,10 @@ var = words.map(lambda a: math.floor(pow((int(a) - mean), 2)))
 var = var.reduce(lambda a, b :(int(a) + int(b))) / words.count()
 
 outputFile = open(sys.argv[2], "w")
+outputFile.write('Mean\t%s\n' % mean)
 outputFile.write('Sum\t%s\n' % sum)
 outputFile.write('Min\t%s\n' % minimum)
 outputFile.write('Max\t%s\n' % maximum)
-outputFile.write('Mean\t%s\n' % mean)
 outputFile.write('Var\t%s\n' % math.floor(var))
 
 
