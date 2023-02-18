@@ -10,7 +10,7 @@ from pyspark import SparkConf, SparkContext
 def process_delimiters(delmitersAsString):
     special_characters = ['.', '\\', '+', '*', '?', '[', ']', '(', ')', '{', '}', '!', ':', '-']
     regex = ""
-    delimiters_as_list = [*delmitersAsString]
+    delimiters_as_list = [delmitersAsString]
     for delimiter in delimiters_as_list:
         if delimiter in special_characters:
             regex += "\\" + delimiter + "|"
