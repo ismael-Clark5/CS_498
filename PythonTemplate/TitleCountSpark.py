@@ -35,11 +35,11 @@ delimiters = process_delimiters(delimiters)
 lines = sc.textFile(sys.argv[3], 1)
 words = lines.flatMap(lambda line: re.split(delimiters, line.strip()))
 wordCounts = words.map(lambda word: (word, 1)).reduceByKey(lambda a,b:a +b).sortBy(lambda x : (-x[1], x[0])).take(10)
-wordCounts.saveAsTextFile("./output")
-# outputFile = open(sys.argv[4],"w")
-# for finalWord in top10Lists:
-#     word = finalWord[0]
-#     count = finalWord[1]
-#     outputFile.write(word + " " + str(count) + "\n")
+# wordCounts.saveAsTextFile("./output")
+outputFile = open(sys.argv[4],"w")
+for finalWord in wordCounts:
+    word = finalWord[0]
+    count = finalWord[1]
+    outputFile.write(word + " " + str(count) + "\n")
 
 sc.stop()
