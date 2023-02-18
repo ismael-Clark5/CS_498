@@ -14,7 +14,7 @@ linksTo =  lines.map(lambda line: line.strip().split(":")[1])
 linksTo = linksTo.flatMap(lambda line: line.strip().split(" "))
 linkCounts = linksTo.map(lambda word: (word, 1)).reduceByKey(lambda a,b:a +b).sortBy(lambda x : (-x[1], x[0]))
 
-leagueIds = sc.textFile(sys.argv[2], 1)
+leagueIds = sc.textFile(sys.argv[2], 1).collect()
 
 linksInLeague = linkCounts.filter(lambda link: link[0] in leagueIds).collect()
 output = open(sys.argv[2], "w")
