@@ -15,9 +15,8 @@ minimum = words.reduce(lambda a, b : min(int(a), int(b)))
 maximum = words.reduce(lambda a,b : max(int(a), int(b)))
 sum = words.reduce(lambda a, b :(int(a) + int(b)))
 mean = sum / words.count()
-values_for_var = [(lambda a: math.floor(pow((a - mean), 2)))(a) for a in words]
-var = words.reduce()
-var = lambda a, b :(int(a) + int(b)) / words.count()
+var = words.map(lambda a: math.floor(pow((a - mean), 2)))
+var = var.reduce(lambda a, b :(int(a) + int(b))) / words.count()
 
 outputFile = open(sys.argv[2], "w")
 outputFile.write('Sum\t%s\n' % sum)
