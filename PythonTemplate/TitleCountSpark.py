@@ -22,7 +22,7 @@ stopWordsPath = sys.argv[1]
 delimitersPath = sys.argv[2]
 
 with open(stopWordsPath) as f:
-    stopwords = f.readlines()
+    stopwords = f.read()
 
 with open(delimitersPath) as f:
     delimiters = str(f.read())
