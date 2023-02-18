@@ -12,11 +12,11 @@ lines = sc.textFile(sys.argv[1], 100)
 
 linksTo =  lines.map(lambda line: line.strip().split(":")[1])
 linksTo = linksTo.flatMap(lambda line: line.strip().split(" "))
-linkCounts = linksTo.map(lambda word: (word, 1)).reduceByKey(lambda a,b:a +b).sortBy(lambda x : (-x[1], x[0]))
+linkCounts = linksTo.map(lambda word: (word, 1)).reduceByKey(lambda a,b:a +b)
 
-leagueIds = sc.textFile(sys.argv[2], 1).collect()
-
-linksInLeague = linkCounts.filter(lambda link: link[0] in leagueIds).collect()
+leagueIds = sc.textFile(sys.argv[2], 1)
+leagueIdsAsList = leagueIds.collect()
+linksInLeague = linkCounts.filter(lambda link: link[0] in leagueIdsAsList).collect()
 output = open(sys.argv[2], "w")
 for pageLink in linksInLeague:
     linkId = pageLink[0]
