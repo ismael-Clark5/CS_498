@@ -65,6 +65,7 @@ public class OrphanPages extends Configured implements Tool {
     public static class OrphanPageReduce extends Reducer<IntWritable, IntWritable, IntWritable, NullWritable> {
         private TreeSet <IntWritable> leftSide = new TreeSet<>();
         private TreeSet <IntWritable> rightSide = new TreeSet<>();
+        private TreeSet <IntWritable> difference = new TreeSet<>();
         @Override
         protected void setup(Context context) throws IOException,InterruptedException {
             Configuration conf = context.getConfiguration();
@@ -81,8 +82,11 @@ public class OrphanPages extends Configured implements Tool {
         protected void cleanup(Context context) throws IOException, InterruptedException {
             for(IntWritable element : leftSide){
                 if(!rightSide.contains(element)){
-                    context.write(element, NullWritable.get());
+                    difference.add(element);
                 }
+            }
+            for(IntWritable orphanLink : difference){
+                context.write(element, NullWritable.get());
             }
         }
     }
