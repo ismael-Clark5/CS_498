@@ -8,7 +8,7 @@ sc = SparkContext(conf=conf)
 
 lines = sc.textFile(sys.argv[1], 1) 
 idToLinksMap = lines.flatMap(lambda line: lines.strip().split(":"))
-idToLinksMap.saveAsTextFile("/output")
+# idToLinksMap.saveAsTextFile("/output")
 #TODO
 
 output = open(sys.argv[2], "w")
