@@ -12,12 +12,14 @@ with open(stopWordsPath) as f:
     stopwords = f.read()
 
 with open(delimitersPath) as f:
-    delimiters = f.read()
+    delimiters = str(f.read())
 
 conf = SparkConf().setMaster("local").setAppName("TitleCount")
 conf.set("spark.driver.bindAddress", "127.0.0.1")
 sc = SparkContext(conf=conf)
 
+print("Ismael" + delimiters)
+print("Ismael" + stopWordsPath)
 lines = sc.textFile(sys.argv[3], 1)
 words = lines.flatMap(lambda line: line.strip().split(delimiters))
 
