@@ -77,14 +77,14 @@ public class OrphanPages extends Configured implements Tool {
             for(IntWritable val : values){
                 rightSide.add(val);
             }
-        }
-        @Override
-        protected void cleanup(Context context) throws IOException, InterruptedException {
             for(IntWritable element : leftSide){
                 if(!rightSide.contains(element)){
                     difference.add(element);
                 }
             }
+        }
+        @Override
+        protected void cleanup(Context context) throws IOException, InterruptedException {
             for(IntWritable orphanLink : difference){
                 context.write(orphanLink, NullWritable.get());
             }
