@@ -6,10 +6,18 @@ conf = SparkConf().setMaster("local").setAppName("OrphanPages")
 conf.set("spark.driver.bindAddress", "127.0.0.1")
 sc = SparkContext(conf=conf)
 
-lines = sc.textFile(sys.argv[1], 1) 
-idToLinksMap = lines.flatMap(lambda line: line.strip().split(":")).map(lambda a, b : tuple(a, b))
-idToLinksMap.saveAsTextFile("./output")
+lines = sc.textFile(sys.argv[1], 100)
+pageIds = lines.flatMap(lambda line: line.strip().split(":")[0])
+linksTo =  lines.flatMap(lambda line: line.strip().split(":")[1])
+linksTo = linksTo.flatMap(lambda line: line.strip().split(" ")[1])
+
+pageIdsAsSet = set(pageIds.collect())
+linksTo = set(linksTo.collect())
+orphanLinks = sorted(pageIdsAsSet.difference(linksTo))
+
 output = open(sys.argv[2], "w")
+for element in orphanLinks:
+    output.write(str(element) + "\n")
 
 
 #write results to output file. Foramt for each line: (line + "\n")
