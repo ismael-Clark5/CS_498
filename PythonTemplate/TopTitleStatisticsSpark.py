@@ -8,8 +8,8 @@ sc = SparkContext(conf=conf)
 
 lines = sc.textFile(sys.argv[1], 1)
 
-#TODO
-
+words = lines.flatMap(lambda line: line.split(" "))
+words.saveAsTextFile("./output")
 outputFile = open(sys.argv[2], "w")
 '''
 TODO write your output here
