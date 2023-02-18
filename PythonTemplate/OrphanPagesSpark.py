@@ -7,13 +7,12 @@ conf.set("spark.driver.bindAddress", "127.0.0.1")
 sc = SparkContext(conf=conf)
 
 lines = sc.textFile(sys.argv[1], 1) 
-idToLinksMap = lines.flatMap(lambda line: lines.strip().split(":"))
-# idToLinksMap.saveAsTextFile("/output")
-#TODO
+idToLinksMap = lines.flatMap(lambda line: lines.strip().split(":")).collect()
 
 output = open(sys.argv[2], "w")
+for element in idToLinksMap:
+    output.write(str(element) + "\n")
 
-#TODO
 #write results to output file. Foramt for each line: (line + "\n")
 
 sc.stop()
