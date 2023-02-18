@@ -33,6 +33,7 @@ conf.set("spark.driver.bindAddress", "127.0.0.1")
 sc = SparkContext(conf=conf)
 
 delimiters = process_delimiters(delimiters)
+stopwords.append("")
 lines = sc.textFile(sys.argv[3], 1)
 delimiterAsRe = re.compile('[' + re.escape(delimiters) + ']')
 words = lines.flatMap(lambda line: delimiterAsRe.split(line.lower().strip()))
