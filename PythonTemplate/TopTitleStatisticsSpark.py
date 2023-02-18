@@ -23,7 +23,7 @@ outputFile.write('Sum\t%s\n' % sum)
 outputFile.write('Min\t%s\n' % minimum)
 outputFile.write('Max\t%s\n' % maximum)
 outputFile.write('Mean\t%s\n' % mean)
-outputFile.write('Var\t%s\n' % var)
+outputFile.write('Var\t%s\n' % math.floor(var))
 
 
 sc.stop()
