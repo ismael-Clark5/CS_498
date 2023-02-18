@@ -3,13 +3,26 @@
 '''Exectuion Command: spark-submit TitleCountSpark.py stopwords.txt delimiters.txt dataset/titles/ dataset/output'''
 
 import sys
+import re
 from pyspark import SparkConf, SparkContext
+
+
+def process_delimiters(delmitersAsString):
+    special_characters = ['.', '\\', '+', '*', '?', '[', ']', '(', ')', '{', '}', '!', ':', '-']
+    regex = ""
+    delimiters_as_list = [*delimiters]
+    for delimiter in delimiters_as_list:
+        if delimiter in special_characters:
+            regex += "\\" + delimiter + "|"
+        else:
+            regex += delimiter + "|"
+    return regex[:-1]
 
 stopWordsPath = sys.argv[1]
 delimitersPath = sys.argv[2]
 
 with open(stopWordsPath) as f:
-    stopwords = f.read()
+    stopwords = f.readlines()
 
 with open(delimitersPath) as f:
     delimiters = str(f.read())
@@ -18,10 +31,9 @@ conf = SparkConf().setMaster("local").setAppName("TitleCount")
 conf.set("spark.driver.bindAddress", "127.0.0.1")
 sc = SparkContext(conf=conf)
 
-print("Ismael" + delimiters)
-print("Ismael" + stopWordsPath)
+delimiters = process_delimiters(delimiters)
 lines = sc.textFile(sys.argv[3], 1)
-words = lines.flatMap(lambda line: line.strip().split(delimiters))
+words = lines.flatMap(lambda line: re.split(delimiters, line.strip()))
 
 wordCounts = words.map(lambda word: (word, 1) if (word not in stopwords) else None).reduceByKey(lambda a,b:a +b)
 top10Lists = wordCounts.sortBy(lambda x :(-x[1], x[0])).cache().take(10)
