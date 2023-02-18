@@ -17,6 +17,15 @@ linkCounts = linksTo.map(lambda word: (word, 1)).reduceByKey(lambda a,b:a +b)
 leagueIds = sc.textFile(sys.argv[2], 1)
 leagueIdsAsList = leagueIds.collect()
 linksInLeague = linkCounts.filter(lambda link: link[0] in leagueIdsAsList).collect()
+
+for linkData in linksInLeague:
+    linkCount = linkData[1]
+    count = 0
+    for secondaryLink in linksInLeague:
+        if linkCount > secondaryLink[1]:
+            count = count + 1
+    linkData[1] = count
+
 output = open(sys.argv[3], "w")
 for pageLink in linksInLeague:
     linkId = pageLink[0]
