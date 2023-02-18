@@ -9,7 +9,7 @@ sc = SparkContext(conf=conf)
 
 lines = sc.textFile(sys.argv[1], 1)
 
-words = lines.map(lambda line: line.split(" ")).filter(lambda x : x.isnumeric())
+words = lines.map(lambda x: int(x.split()[1]))
 
 minimum = words.reduce(lambda a, b : min(int(a), int(b)))
 maximum = words.reduce(lambda a,b : max(int(a), int(b)))
