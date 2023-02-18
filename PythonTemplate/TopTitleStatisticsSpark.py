@@ -10,11 +10,10 @@ lines = sc.textFile(sys.argv[1], 1)
 
 words = lines.flatMap(lambda line: line.split(" ")).filter(lambda x : x.isnumeric())
 # mean = words
-sum = words.reduce(lambda a,b :( a + b))
-minimum = words.reduce(lambda a,b : min(a, b))
-maximum = words.reduce(lambda a,b : max(a, b))
+minimum = words.reduce(lambda a, b : min(int(a), int(b)))
+maximum = words.reduce(lambda a,b : max(int(a), int(b)))
+sum = words.reduce(lambda a, b :(int(a) + int(b)))
 # var =
-words.saveAsTextFile("./output")
 outputFile = open(sys.argv[2], "w")
 outputFile.write('Sum\t%s\n' % sum)
 outputFile.write('Min\t%s\n' % minimum)
