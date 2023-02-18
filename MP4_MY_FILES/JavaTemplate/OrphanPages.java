@@ -82,12 +82,13 @@ public class OrphanPages extends Configured implements Tool {
                     difference.add(element);
                 }
             }
-        }
-        @Override
-        protected void cleanup(Context context) throws IOException, InterruptedException {
             for(IntWritable orphanLink : difference){
                 context.write(orphanLink, NullWritable.get());
             }
         }
+//        @Override
+//        protected void cleanup(Context context) throws IOException, InterruptedException {
+//
+//        }
     }
 }
