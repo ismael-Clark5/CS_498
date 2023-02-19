@@ -96,6 +96,6 @@ public class OrphanPages extends Configured implements Tool {
 //            for(IntWritable orphanLink : difference){
 //                context.write(orphanLink, NullWritable.get());
 //            }
-        }
-    }
+//        }
+//    }
 }
