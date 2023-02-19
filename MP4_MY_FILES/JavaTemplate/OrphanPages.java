@@ -86,16 +86,16 @@ public class OrphanPages extends Configured implements Tool {
                 context.write(orphanLink, NullWritable.get());
             }
         }
-//        @Override
-//        protected void cleanup(Context context) throws IOException, InterruptedException {
-//            for(IntWritable element : leftSide){
-//                if(!rightSide.contains(element)){
-//                    difference.add(element);
-//                }
-//            }
-//            for(IntWritable orphanLink : difference){
-//                context.write(orphanLink, NullWritable.get());
-//            }
-//        }
-//    }
+        @Override
+        protected void cleanup(Context context) throws IOException, InterruptedException {
+            for(IntWritable element : leftSide){
+                if(!rightSide.contains(element)){
+                    difference.add(element);
+                }
+            }
+            for(IntWritable orphanLink : difference){
+                context.write(orphanLink, NullWritable.get());
+            }
+        }
+    }
 }
