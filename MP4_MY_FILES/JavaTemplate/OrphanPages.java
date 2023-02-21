@@ -55,9 +55,9 @@ public class OrphanPages extends Configured implements Tool {
                 if(!pageId.equals(links[i])){
                     context.write(new IntWritable(Integer.parseInt(links[i])), new IntWritable(Integer.parseInt(pageId)));
                 }
-//                else{
-//                    context.write(new IntWritable(Integer.parseInt(pageId)), new IntWritable(-1));
-//                }
+                else{
+                    context.write(new IntWritable(-1), new IntWritable(Integer.parseInt(pageId)));
+                }
             }
         }
     }
@@ -75,13 +75,17 @@ public class OrphanPages extends Configured implements Tool {
         public void reduce(IntWritable key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
 //            leftSide.add(key);
             int count = 0;
-
             for(IntWritable val : values){
-                count++;
+                if(Integer.parseInt(val.toString()) != -1){
+                    count++;
+                }
             }
-            System.out.println(count);
             orphans.put(key, count);
-            context.write(key, NullWritable.get());
+            System.out.println(orphans.toString());
+            if(count == 0){
+                context.write(key, NullWritable.get());
+            }
+
 //            if(count == 0){
 //                context.write(key, NullWritable.get());
 //            }
