@@ -53,19 +53,19 @@ public class OrphanPages extends Configured implements Tool {
             String[] links = line[1].trim().split(" ");
             for(int i = 0; i < links.length; i++){
                 if(!pageId.equals(links[i])){
-                    context.write(new IntWritable(Integer.parseInt(pageId)), new IntWritable(Integer.parseInt(links[i])));
+                    context.write(new IntWritable(Integer.parseInt(links[i])), new IntWritable(Integer.parseInt(pageId)));
                 }
-                else{
-                    context.write(new IntWritable(Integer.parseInt(pageId)), new IntWritable(-1));
-                }
+//                else{
+//                    context.write(new IntWritable(Integer.parseInt(pageId)), new IntWritable(-1));
+//                }
             }
         }
     }
 
     public static class OrphanPageReduce extends Reducer<IntWritable, IntWritable, IntWritable, NullWritable> {
-        private TreeSet <IntWritable> leftSide = new TreeSet<>();
-        private TreeSet <IntWritable> rightSide = new TreeSet<>();
-        private TreeSet <IntWritable> difference = new TreeSet<>();
+//        private TreeSet <IntWritable> leftSide = new TreeSet<>();
+//        private TreeSet <IntWritable> rightSide = new TreeSet<>();
+        private HashMap <IntWritable, Integer> orphans = new HashMap<>();
         @Override
         protected void setup(Context context) throws IOException,InterruptedException {
             Configuration conf = context.getConfiguration();
@@ -73,29 +73,34 @@ public class OrphanPages extends Configured implements Tool {
 
         @Override
         public void reduce(IntWritable key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
-            leftSide.add(key);
+//            leftSide.add(key);
+            int count = 0;
             for(IntWritable val : values){
-                rightSide.add(val);
+                count++;
             }
+            if(count == 0){
+                context.write(key, NullWritable.get());
+            }
+//            orphans.put(key, count)
             for(IntWritable element : leftSide){
                 if(!rightSide.contains(element)){
                     difference.add(element);
                 }
             }
-            for(IntWritable orphanLink : difference){
-                context.write(orphanLink, NullWritable.get());
-            }
+//            for(IntWritable orphanLink : difference){
+//                context.write(orphanLink, NullWritable.get());
+//            }
         }
-        @Override
-        protected void cleanup(Context context) throws IOException, InterruptedException {
-            for(IntWritable element : leftSide){
-                if(!rightSide.contains(element)){
-                    difference.add(element);
-                }
-            }
-            for(IntWritable orphanLink : difference){
-                context.write(orphanLink, NullWritable.get());
-            }
-        }
+//        @Override
+//        protected void cleanup(Context context) throws IOException, InterruptedException {
+//            for(IntWritable element : leftSide){
+//                if(!rightSide.contains(element)){
+//                    difference.add(element);
+//                }
+//            }
+//            for(IntWritable orphanLink : difference){
+//                context.write(orphanLink, NullWritable.get());
+//            }
+//        }
     }
 }
