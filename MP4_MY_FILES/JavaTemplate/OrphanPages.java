@@ -64,7 +64,7 @@ public class OrphanPages extends Configured implements Tool {
     public static class OrphanPageReduce extends Reducer<IntWritable, IntWritable, IntWritable, NullWritable> {
         private TreeSet <IntWritable> leftSide = new TreeSet<>();
         private TreeSet <IntWritable> rightSide = new TreeSet<>();
-        private HashMap <IntWritable, Integer> orphans = new HashMap<>();
+        private TreeSet <IntWritable> orphans = new TreeSet<>();
         @Override
         public void reduce(IntWritable key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
             leftSide.add(key);
