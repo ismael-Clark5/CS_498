@@ -73,8 +73,11 @@ public class OrphanPages extends Configured implements Tool {
                 if(Integer.parseInt(val.toString()) != -1){
                     rightSide.add(val);
                 }
-
             }
+        }
+
+        @Override
+        public void cleanup(Context context) throws IOException, InterruptedException{
             for(IntWritable element : leftSide){
                 if(!rightSide.contains(element)){
                     orphans.add(element);
