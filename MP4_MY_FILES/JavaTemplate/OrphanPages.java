@@ -16,6 +16,7 @@ import org.apache.hadoop.util.ToolRunner;
 
 import java.io.IOException;
 import java.util.StringTokenizer;
+import java.util.TreeSetc;
 
 public class OrphanPages extends Configured implements Tool {
     public static final Log LOG = LogFactory.getLog(OrphanPages.class);
@@ -76,10 +77,10 @@ public class OrphanPages extends Configured implements Tool {
             }
             for(IntWritable element : leftSide){
                 if(!rightSide.contains(element)){
-                    difference.add(element);
+                    orphans.add(element);
                 }
             }
-            for(IntWritable orphanLink : difference){
+            for(IntWritable orphanLink : orphans){
                 context.write(orphanLink, NullWritable.get());
             }
         }
