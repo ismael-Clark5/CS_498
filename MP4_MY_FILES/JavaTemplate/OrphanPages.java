@@ -56,7 +56,7 @@ public class OrphanPages extends Configured implements Tool {
                     context.write(new IntWritable(Integer.parseInt(links[i])), new IntWritable(Integer.parseInt(pageId)));
                 }
                 else{
-                    context.write(new IntWritable(-1), new IntWritable(Integer.parseInt(pageId)));
+                    context.write(new IntWritable(null), new IntWritable(Integer.parseInt(pageId)));
                 }
             }
         }
@@ -90,11 +90,11 @@ public class OrphanPages extends Configured implements Tool {
 //                context.write(key, NullWritable.get());
 //            }
 //            orphans.put(key, count)
-//            for(IntWritable element : leftSide){
-//                if(!rightSide.contains(element)){
-//                    difference.add(element);
-//                }
-//            }
+            for(IntWritable element : leftSide){
+                if(!rightSide.contains(element)){
+                    difference.add(element);
+                }
+            }
 //            for(IntWritable orphanLink : difference){
 //                context.write(orphanLink, NullWritable.get());
 //            }
