@@ -82,11 +82,11 @@ public class OrphanPages extends Configured implements Tool {
                 context.write(key, NullWritable.get());
             }
 //            orphans.put(key, count)
-            for(IntWritable element : leftSide){
-                if(!rightSide.contains(element)){
-                    difference.add(element);
-                }
-            }
+//            for(IntWritable element : leftSide){
+//                if(!rightSide.contains(element)){
+//                    difference.add(element);
+//                }
+//            }
 //            for(IntWritable orphanLink : difference){
 //                context.write(orphanLink, NullWritable.get());
 //            }
