@@ -16,8 +16,6 @@ import org.apache.hadoop.util.ToolRunner;
 
 import java.io.IOException;
 import java.util.StringTokenizer;
-import java.util.TreeSet;
-import java.util.*;
 
 public class OrphanPages extends Configured implements Tool {
     public static final Log LOG = LogFactory.getLog(OrphanPages.class);
@@ -41,6 +39,7 @@ public class OrphanPages extends Configured implements Tool {
 
         FileInputFormat.setInputPaths(job, new Path(args[0]));
         FileOutputFormat.setOutputPath(job, new Path(args[1]));
+
         job.setJarByClass(OrphanPages.class);
         return job.waitForCompletion(true) ? 0 : 1;
     }
@@ -53,62 +52,36 @@ public class OrphanPages extends Configured implements Tool {
             String[] links = line[1].trim().split(" ");
             for(int i = 0; i < links.length; i++){
                 if(!pageId.equals(links[i])){
-                    context.write(new IntWritable(Integer.parseInt(links[i])), new IntWritable(Integer.parseInt(pageId)));
+                    context.write(new IntWritable(Integer.parseInt(pageId)), new IntWritable(Integer.parseInt(links[i])));
                 }
                 else{
-                    context.write(new IntWritable(null), new IntWritable(Integer.parseInt(pageId)));
+                    context.write(new IntWritable(Integer.parseInt(pageId)), new IntWritable(-1));
                 }
             }
         }
     }
 
     public static class OrphanPageReduce extends Reducer<IntWritable, IntWritable, IntWritable, NullWritable> {
-//        private TreeSet <IntWritable> leftSide = new TreeSet<>();
-//        private TreeSet <IntWritable> rightSide = new TreeSet<>();
+        private TreeSet <IntWritable> leftSide = new TreeSet<>();
+        private TreeSet <IntWritable> rightSide = new TreeSet<>();
         private HashMap <IntWritable, Integer> orphans = new HashMap<>();
         @Override
-        protected void setup(Context context) throws IOException,InterruptedException {
-            Configuration conf = context.getConfiguration();
-        }
-
-        @Override
         public void reduce(IntWritable key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
-//            leftSide.add(key);
-            int count = 0;
+            leftSide.add(key);
             for(IntWritable val : values){
                 if(Integer.parseInt(val.toString()) != -1){
-                    count++;
+                    rightSide.add(val);
                 }
-            }
-            orphans.put(key, count);
-            System.out.println(orphans.toString());
-            if(count == 0){
-                context.write(key, NullWritable.get());
-            }
 
-//            if(count == 0){
-//                context.write(key, NullWritable.get());
-//            }
-//            orphans.put(key, count)
+            }
             for(IntWritable element : leftSide){
                 if(!rightSide.contains(element)){
                     difference.add(element);
                 }
             }
-//            for(IntWritable orphanLink : difference){
-//                context.write(orphanLink, NullWritable.get());
-//            }
+            for(IntWritable orphanLink : difference){
+                context.write(orphanLink, NullWritable.get());
+            }
         }
-//        @Override
-//        protected void cleanup(Context context) throws IOException, InterruptedException {
-//            for(IntWritable element : leftSide){
-//                if(!rightSide.contains(element)){
-//                    difference.add(element);
-//                }
-//            }
-//            for(IntWritable orphanLink : difference){
-//                context.write(orphanLink, NullWritable.get());
-//            }
-//        }
     }
 }
