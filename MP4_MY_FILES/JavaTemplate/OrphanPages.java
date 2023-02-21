@@ -79,6 +79,7 @@ public class OrphanPages extends Configured implements Tool {
             for(IntWritable val : values){
                 count++;
             }
+            System.out.println(count);
             orphans.put(key, count);
             context.write(key, NullWritable.get());
 //            if(count == 0){
