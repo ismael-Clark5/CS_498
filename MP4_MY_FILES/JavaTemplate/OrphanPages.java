@@ -80,9 +80,10 @@ public class OrphanPages extends Configured implements Tool {
                 count++;
             }
             orphans.put(key, count);
-            if(count == 0){
-                context.write(key, NullWritable.get());
-            }
+            context.write(key, NullWritable.get());
+//            if(count == 0){
+//                context.write(key, NullWritable.get());
+//            }
 //            orphans.put(key, count)
 //            for(IntWritable element : leftSide){
 //                if(!rightSide.contains(element)){
