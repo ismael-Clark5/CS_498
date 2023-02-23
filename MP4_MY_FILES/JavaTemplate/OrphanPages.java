@@ -53,10 +53,7 @@ public class OrphanPages extends Configured implements Tool {
             String[] links = line[1].trim().split(" ");
             for(int i = 0; i < links.length; i++){
                 if(!pageId.equals(links[i])){
-                    context.write(new IntWritable(Integer.parseInt(links[i])), new IntWritable(Integer.parseInt(pageId)));
-                }
-                else{
-                    context.write(new IntWritable(Integer.parseInt(pageId)), new IntWritable(-1));
+                    context.write(new IntWritable(Integer.parseInt(links[i])), new IntWritable(1));
                 }
             }
         }
@@ -67,11 +64,11 @@ public class OrphanPages extends Configured implements Tool {
 
         @Override
         public void reduce(IntWritable key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
-            TreeSet <IntWritable> parents = new TreeSet<>();
+            int count = 0;
             for(IntWritable val : values){
-                parents.add(val);
+                count ++;
             }
-            if(parents.size() == 0 || (parents.size() == 1 && Integer.parseInt(parents.first().toString()) == -1)){
+            if(count ==0){
                 context.write(key, NullWritable.get());
             }
         }
