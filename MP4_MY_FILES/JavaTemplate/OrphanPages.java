@@ -67,12 +67,12 @@ public class OrphanPages extends Configured implements Tool {
 
         @Override
         public void reduce(IntWritable key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
-            private TreeSet <IntWritable> parents = new TreeSet<>();
+            TreeSet <IntWritable> parents = new TreeSet<>();
             for(IntWritable val : values){
                 parents.add(val);
             }
             if(parents.size == 0 || (parents.size() == 1 && parents.first() == -1)){
-                context.write(key, NullWritable.get())
+                context.write(key, NullWritable.get());
             }
         }
     }
