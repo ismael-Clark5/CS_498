@@ -71,7 +71,7 @@ public class OrphanPages extends Configured implements Tool {
             for(IntWritable val : values){
                 parents.add(val);
             }
-            if(parents.size == 0 || (parents.size() == 1 && Integer.parseInt(parents.first().toString()) == -1)){
+            if(parents.size() == 0 || (parents.size() == 1 && Integer.parseInt(parents.first().toString()) == -1)){
                 context.write(key, NullWritable.get());
             }
         }
