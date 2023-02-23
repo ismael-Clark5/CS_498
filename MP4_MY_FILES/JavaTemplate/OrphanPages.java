@@ -53,7 +53,7 @@ public class OrphanPages extends Configured implements Tool {
             String[] links = line[1].trim().split(" ");
             for(int i = 0; i < links.length; i++){
                 if(!pageId.equals(links[i])){
-                    context.write(new IntWritable(Integer.parseInt(pageId)), new IntWritable(Integer.parseInt(links[i])));
+                    context.write(new IntWritable(Integer.parseInt(links[i])), new IntWritable(Integer.parseInt(pageId)));
                 }
                 else{
                     context.write(new IntWritable(Integer.parseInt(pageId)), new IntWritable(-1));
@@ -63,28 +63,16 @@ public class OrphanPages extends Configured implements Tool {
     }
 
     public static class OrphanPageReduce extends Reducer<IntWritable, IntWritable, IntWritable, NullWritable> {
-        private TreeSet <IntWritable> leftSide = new TreeSet<>();
-        private TreeSet <IntWritable> rightSide = new TreeSet<>();
         private TreeSet <IntWritable> orphans = new TreeSet<>();
-        @Override
-        public void reduce(IntWritable key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
-            leftSide.add(key);
-            for(IntWritable val : values){
-                if(Integer.parseInt(val.toString()) != -1){
-                    rightSide.add(val);
-                }
-            }
-        }
 
         @Override
-        public void cleanup(Context context) throws IOException, InterruptedException{
-            for(IntWritable element : leftSide){
-                if(!rightSide.contains(element)){
-                    orphans.add(element);
-                }
+        public void reduce(IntWritable key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
+            private TreeSet <IntWritable> parents = new TreeSet<>();
+            for(IntWritable val : values){
+                parents.add(val);
             }
-            for(IntWritable orphanLink : orphans){
-                context.write(orphanLink, NullWritable.get());
+            if(parents.size == 0 || (parents.size() == 1 && parents.first() == -1)){
+                context.write(key, NullWritable.get())
             }
         }
     }
