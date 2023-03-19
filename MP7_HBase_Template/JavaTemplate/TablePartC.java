@@ -29,7 +29,7 @@ public class TablePartC{
 
 	File csvInput = new File("input.csv");
     FileReader fr = new FileReader(csvInput);
-    BufferReader br = new BufferReader(fr);
+    BufferedReader br = new BufferedReader(fr);
     String line = "";
     while((line = br.readLine()) != null){
         System.out.println(line);
