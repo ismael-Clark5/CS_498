@@ -49,7 +49,7 @@ public class TablePartC{
     String delimiter = ",";
     Put p;
     while((line = br.readLine()) != null){
-        String [] elements = line.strip().split(delimiter);
+        String [] elements = line.trim().split(delimiter);
         String rowName = elements[0];
         String hero = elements[1];
         String power = elements[2];
