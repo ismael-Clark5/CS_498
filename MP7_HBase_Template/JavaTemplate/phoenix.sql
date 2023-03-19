@@ -9,4 +9,4 @@
 --WHERE p."hero" = "yes" and p1."hero" = "yes";
 SELECT p."name" as Name1
 FROM "powers" as p
-WHERE p."xp" = "professional"."37";
+WHERE p."professional"."xp" == "37";
