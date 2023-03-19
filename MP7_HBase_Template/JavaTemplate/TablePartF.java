@@ -16,7 +16,7 @@ import org.apache.hadoop.hbase.client.ResultScanner;
 import org.apache.hadoop.hbase.client.Scan;
 
 import org.apache.hadoop.hbase.util.Bytes;
-import java.utils.*;
+import java.util.*;
 
 public class TablePartF{
 
