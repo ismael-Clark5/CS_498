@@ -34,13 +34,13 @@ public class TablePartF{
     for (Result result = scanner.next(); result != null; result = scanner.next()){
 		System.out.println(result.class);
     }
-	String name = ???;
-	String power = ???;
-	String color = ???;
+	String name = "???";
+	String power = "???";
+	String color = "???";
 
-	String name1 = ???;
-	String power1 = ???;
-	String color1 = ???;
+	String name1 = "???";
+	String power1 = "???";
+	String color1 = "???";
 	System.out.println(name + ", " + power + ", " + name1 + ", " + power1 + ", "+color);
 
    }
