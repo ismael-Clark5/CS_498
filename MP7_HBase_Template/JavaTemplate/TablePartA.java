@@ -26,12 +26,12 @@ public class TablePartA{
     powersTable.addFamily(new HColumnDescriptor("personal"));
     powersTable.addFamily(new HColumnDescriptor("professional"));
     powersTable.addFamily(new HColumnDescriptor("custom"));
-      System.out.println("Creating Table 1");
+
     HTableDescriptor foodTable = new HTableDescriptor("food");
     foodTable.addFamily(new HColumnDescriptor("nutrition"));
     foodTable.addFamily(new HColumnDescriptor("taste"));
-      System.out.println("Creating Table 2");
     HBaseAdmin hba = new HBaseAdmin(hBaseConfig);
+
     hba.createTable(powersTable);
     hba.createTable(foodTable);
    }
