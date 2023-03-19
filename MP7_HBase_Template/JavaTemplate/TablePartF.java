@@ -16,13 +16,9 @@ import org.apache.hadoop.hbase.client.ResultScanner;
 import org.apache.hadoop.hbase.client.Scan;
 
 import org.apache.hadoop.hbase.util.Bytes;
-import java.utils.*;
+
 public class TablePartF{
-    public class HeroData {
-        String name;
-        String power;
-        String color;
-    }
+
    public static void main(String[] args) throws IOException {
 
 	// TODO      
@@ -30,23 +26,15 @@ public class TablePartF{
 	// OR YOU WON'T RECEIVE POINTS FROM THE GRADER      
     HBaseConfiguration hBaseConfig = new HBaseConfiguration(new Configuration());
     HTable hTable = new HTable(hBaseConfig, "powers");
-    List<HeroData> listOfHeroes = new ArrayList<>();
-    int maxRows = 26;
-    int rowCount = 0;
-    for (int rowCount = 1; rowCount < maxRows; rowCount++){
-        String rowName = "row" + rowCount;
-        Get getRow = new Get(Bytes.toBytes(rowName));
-        Result result = hTable.get(getRow);
-        byte [] valuePower = result.getValue(Bytes.toBytes("personal"),Bytes.toBytes("power"));
-        byte [] valueName = resultOne.getValue(Bytes.toBytes("professional"),Bytes.toBytes("name"));
-        byte [] valueColor = resultOne.getValue(Bytes.toBytes("custom"),Bytes.toBytes("color"));
-        HeroData hero = new HeroData();
-        hero.name = valueName;
-        hero.power = valuePower;
-        hero.color = valueColor;
-        listOfHeroes.add(hero);
-    }
 
+    Scan scan = new Scan();
+    scan.addColumn(Bytes.toBytes("personal"), Bytes.toBytes("power"));
+    scan.addColumn(Bytes.toBytes("professional"), Bytes.toBytes("name"));
+    scan.addColumn(Bytes.toBytes("custom"), Bytes.toBytes("color"));
+    ResultScanner scanner = hTable.getScanner(scan);
+    for (Result result = scanner.next(); result != null; result = scanner.next()){
+		System.out.println(result.getColumnCells("personal"));
+    }
 	String name = "???";
 	String power = "???";
 	String color = "???";
