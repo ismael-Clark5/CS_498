@@ -32,7 +32,8 @@ public class TablePartA{
     foodTable.addFamily(new HColumnDescriptor("taste"));
 
     HBaseAdmin hba = new HBaseAdmin(hBaseConfig);
-    hba.createTable(ht);
+    hba.createTable(powersTable);
+    hba.createTable(foodTable);
    }
 }
 
