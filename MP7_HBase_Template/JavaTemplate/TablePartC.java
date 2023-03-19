@@ -21,11 +21,19 @@ import org.apache.hadoop.hbase.client.Scan;
 
 import org.apache.hadoop.hbase.util.Bytes;
 
+import java.io.*;
+
 public class TablePartC{
 
    public static void main(String[] args) throws IOException {
 
-	//TODO      
+	File csvInput = new File("input.csv");
+    FileReader fr = new FileReader(csvInput);
+    BufferReader br = new BufferReader(fr);
+    String line = "";
+    while((line = br.readLine()) != null){
+        System.out.println(line);
+    }
    }
 }
 
