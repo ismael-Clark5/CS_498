@@ -26,8 +26,8 @@ public class TablePartD{
 	HTable hTable = new HTable(hBaseConfig, "powers");
 	Get getRowOne = new Get(Bytes.toBytes("row1"));
 	Get getRowNineteen = new Get(Bytes.toBytes("row19"));
-	Result resultOne = table.get(getRowOne);
-	Result resultNineteen = table.get(getRowNineteen);
+	Result resultOne = hTable.get(getRowOne);
+	Result resultNineteen = hTable.get(getRowNineteen);
 	byte [] valueHero = resultOne.getValue(Bytes.toBytes("personal"),Bytes.toBytes("hero"));
 	byte [] valuePower = resultOne.getValue(Bytes.toBytes("personal"),Bytes.toBytes("power"));
 	byte [] valueName = resultOne.getValue(Bytes.toBytes("professional"),Bytes.toBytes("name"));
