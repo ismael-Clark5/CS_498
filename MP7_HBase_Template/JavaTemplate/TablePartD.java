@@ -22,25 +22,38 @@ import org.apache.hadoop.hbase.util.Bytes;
 public class TablePartD{
 
    public static void main(String[] args) throws IOException {
+	HBaseConfiguration hBaseConfig = new HBaseConfiguration(new Configuration());
+	HTable hTable = new HTable(hBaseConfig, "powers");
+	Get getRowOne = new Get(Bytes.toBytes("row1"));
+	Get getRowNineteen = new Get(Bytes.toBytes("row19"));
+	Result resultOne = table.get(getRowOne);
+	Result resultNineteen = table.get(getRowNineteen);
+	byte [] valueHero = resultOne.getValue(Bytes.toBytes("personal"),Bytes.toBytes("hero"));
+	byte [] valuePower = resultOne.getValue(Bytes.toBytes("personal"),Bytes.toBytes("power"));
+	byte [] valueName = resultOne.getValue(Bytes.toBytes("professional"),Bytes.toBytes("name"));
+	byte [] valueXp = resultOne.getValue(Bytes.toBytes("professional"),Bytes.toBytes("xp"));
+	byte [] valueColor = resultOne.getValue(Bytes.toBytes("custom"),Bytes.toBytes("color"));
 
-	// TODO      
-	// DON' CHANGE THE 'System.out.println(xxx)' OUTPUT PART
-	// OR YOU WON'T RECEIVE POINTS FROM THE GRADER 
 	
-	String hero = ???;
-	String power = ???;
-	String name = ???;
-	String xp = ???;
-	String color = ???;
+	String hero = Bytes.toString(valueHero);
+	String power = Bytes.toString(valuePower);
+	String name = Bytes.toString(valueName);
+	String xp = Bytes.toString(valueXp);
+	String color = Bytes.toString(valueColor);
 	System.out.println("hero: "+hero+", power: "+power+", name: "+name+", xp: "+xp+", color: "+color);
 
-	hero = ???;
-	color = ???;
+	valueHero = resultNineteen.getValue(Bytes.toBytes("personal"),Bytes.toBytes("hero"));
+	valueColor = resultNineteen.getValue(Bytes.toBytes("custom"),Bytes.toBytes("color"));
+	hero = Bytes.toString(valueHero);
+	color = Bytes.toString(valueColor);
 	System.out.println("hero: "+hero+", color: "+color);
 
-	hero = ???;
-	name = ???;
-	color = ???;
+    valueHero = resultOne.getValue(Bytes.toBytes("personal"),Bytes.toBytes("hero"));
+    valueColor = resultOne.getValue(Bytes.toBytes("custom"),Bytes.toBytes("color"));
+	valueName = resultOne.getValue(Bytes.toBytes("professional"),Bytes.toBytes("name"));
+	hero = Bytes.toString(valueHero);
+	name = Bytes.toString(valueName);
+	color = Bytes.toString(valueColor);
 	System.out.println("hero: "+hero+", name: "+name+", color: "+color); 
    }
 }
