@@ -34,13 +34,13 @@ public class TablePartC{
     HColumnDescriptor powersProfessionalDescriptor = new HColumnDescriptor("professional");
     HColumnDescriptor powersCustomDescriptor = new HColumnDescriptor("custom");
 
-    hba.addColumn("hero", powersPersonalDescriptor);
-    hba.addColumn("power", powersPersonalDescriptor);
-
-    hba.addColumn("name", powersProfessionalDescriptor);
-    hba.addColumn("xp", powersProfessionalDescriptor);
-
-    hba.addColumn("color", powersCustomDescriptor);
+//    hba.addColumn("hero", powersPersonalDescriptor);
+//    hba.addColumn("power", powersPersonalDescriptor);
+//
+//    hba.addColumn("name", powersProfessionalDescriptor);
+//    hba.addColumn("xp", powersProfessionalDescriptor);
+//
+//    hba.addColumn("color", powersCustomDescriptor);
 
     File csvInput = new File("input.csv");
     FileReader fr = new FileReader(csvInput);
