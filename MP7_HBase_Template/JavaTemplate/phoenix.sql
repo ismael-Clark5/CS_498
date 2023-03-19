@@ -1,5 +1,5 @@
 --SELECT * FROM "powers";
-DROP TABLE "powers";
+DROP TABLE powers;
 SELECT * FROM "powers";
 --
 --CREATE VIEW "powers" (pk VARCHAR PRIMARY KEY, "personal"."hero" VARCHAR, "personal"."power" VARCHAR,
