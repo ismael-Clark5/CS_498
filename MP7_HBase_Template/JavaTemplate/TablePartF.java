@@ -36,8 +36,8 @@ public class TablePartF{
     List<String> powerList = new ArrayList<>();
     List<String> nameList = new ArrayList<>();
     List<String> colorList = new ArrayList<>();
-    List<int> iIndexList = new ArrayList<>();
-    List<int> jIndexList = new ArrayList<>();
+    List<Integer> iIndexList = new ArrayList<>();
+    List<Integer> jIndexList = new ArrayList<>();
 
     for (Result result = scanner.next(); result != null; result = scanner.next()){
 		String power = Bytes.toString(result.getValue(Bytes.toBytes("personal"), Bytes.toBytes("power")));
