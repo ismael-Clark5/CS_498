@@ -8,5 +8,4 @@
 --ON p."power" = p1."power"
 --WHERE p."hero" = "yes" and p1."hero" = "yes";
 SELECT p."name" as Name1
-FROM "powers" as p
-WHERE "professional"."xp" = "37";
+FROM "powers" as p;
