@@ -36,6 +36,9 @@ public class TablePartF{
     List<String> powerList = new ArrayList<>();
     List<String> nameList = new ArrayList<>();
     List<String> colorList = new ArrayList<>();
+    List<int> iIndexList = new ArrayList<>();
+    List<int> jIndexList = new ArrayList<>();
+
     for (Result result = scanner.next(); result != null; result = scanner.next()){
 		String power = Bytes.toString(result.getValue(Bytes.toBytes("personal"), Bytes.toBytes("power")));
         String name = Bytes.toString(result.getValue(Bytes.toBytes("professional"), Bytes.toBytes("name")));
@@ -45,17 +48,25 @@ public class TablePartF{
         nameList.add(name);
         colorList.add(color);
     }
-    System.out.println(powerList.toString());
-    System.out.println(nameList.toString());
-    System.out.println(colorList.toString());
-	String name = "???";
-	String power = "???";
-	String color = "???";
+    for(int i = 0; i < colorList.size(); i++) {
+        for (int j = 0; j < colorList.size(); j++){
+            if(colorList.get(i).equals(colorList.get(j)) && !nameList.get(i).equals(nameList.get(j))) {
+                iIndexList.add(i);
+                jIndexList.add(j);
+            }
+        }
+    }
+    for (int k = 0; k < iIndexList; k++){
+        String name = nameList.get(iIndexList.get(k));
+        String power = powerList.get(iIndexList.get(k));
+        String color = colorList.get(iIndexList.get(k));
 
-	String name1 = "???";
-	String power1 = "???";
-	String color1 = "???";
-	System.out.println(name + ", " + power + ", " + name1 + ", " + power1 + ", "+color);
+        String name1 = nameList.get(jIndexList.get(k));
+        String power1 = powerList.get(jIndexList.get(k));
+        String color1 = colorList.get(jIndexList.get(k));
+        System.out.println(name + ", " + power + ", " + name1 + ", " + power1 + ", "+color);
+    }
+
 
    }
 }
