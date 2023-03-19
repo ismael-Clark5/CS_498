@@ -45,9 +45,9 @@ public class TablePartF{
         nameList.add(name);
         colorList.add(color);
     }
-    System.println(powerList.toString());
-    System.println(nameList.toString());
-    System.println(colorList.toString());
+    System.out.println(powerList.toString());
+    System.out.println(nameList.toString());
+    System.out.println(colorList.toString());
 	String name = "???";
 	String power = "???";
 	String color = "???";
