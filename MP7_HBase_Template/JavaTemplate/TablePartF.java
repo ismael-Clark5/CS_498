@@ -16,7 +16,7 @@ import org.apache.hadoop.hbase.client.ResultScanner;
 import org.apache.hadoop.hbase.client.Scan;
 
 import org.apache.hadoop.hbase.util.Bytes;
-import java.utils.*
+import java.utils.*;
 public class TablePartF{
     public class HeroData {
         String name;
@@ -44,7 +44,7 @@ public class TablePartF{
         hero.name = valueName;
         hero.power = valuePower;
         hero.color = valueColor;
-        listOfHeroes.add(hero)
+        listOfHeroes.add(hero);
     }
 
 	String name = "???";
