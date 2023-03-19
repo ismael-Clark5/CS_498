@@ -8,4 +8,6 @@
 --ON p."power" = p1."power"
 --WHERE p."hero" = "yes" and p1."hero" = "yes";
 SELECT p."name" as Name1
-FROM "powers" as p;
+FROM "powers" as p
+INNER JOIN powers as p1
+ON p."xp" = p1."xp";
