@@ -32,7 +32,7 @@ public class TablePartF{
     scan.addColumn(Bytes.toBytes("custom"), Bytes.toBytes("color"));
     ResultScanner scanner = hTable.getScanner(scan);
     for (Result result = scanner.next(); result != null; result = scanner.next()){
-		System.out.println(result);
+		System.out.println(result["custom":"color"].value);
     }
 	String name = "???";
 	String power = "???";
