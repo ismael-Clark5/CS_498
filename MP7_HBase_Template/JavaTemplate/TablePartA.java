@@ -21,7 +21,7 @@ public class TablePartA{
 
    public static void main(String[] args) throws IOException {
 
-	HBaseConfigurtation hBaseConfig = new HBaseConfiguration(new Configuration());
+    HBaseConfiguration hBaseConfig = new HBaseConfiguration(new Configuration());
     HTableDescriptor powersTable = new HTableDescriptor("powers");
     powersTable.addFamily(new HColumnDescriptor("personal"));
     powersTable.addFamily(new HColumnDescriptor("professional"));
