@@ -56,6 +56,7 @@ public class TablePartF{
             }
         }
     }
+    System.out.println(iIndexList.size());
     for (int k = 0; k < iIndexList.size(); k++){
         String name = nameList.get(iIndexList.get(k));
         String power = powerList.get(iIndexList.get(k));
