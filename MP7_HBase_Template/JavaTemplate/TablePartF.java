@@ -16,6 +16,7 @@ import org.apache.hadoop.hbase.client.ResultScanner;
 import org.apache.hadoop.hbase.client.Scan;
 
 import org.apache.hadoop.hbase.util.Bytes;
+import java.utils.*;
 
 public class TablePartF{
 
@@ -32,9 +33,21 @@ public class TablePartF{
     scan.addColumn(Bytes.toBytes("professional"), Bytes.toBytes("name"));
     scan.addColumn(Bytes.toBytes("custom"), Bytes.toBytes("color"));
     ResultScanner scanner = hTable.getScanner(scan);
+    List<String> powerList = new ArrayList<>();
+    List<String> nameList = new ArrayList<>();
+    List<String> colorList = new ArrayList<>();
     for (Result result = scanner.next(); result != null; result = scanner.next()){
-		System.out.println(Bytes.toString(result.getRow()));
+		String power = Bytes.toString(result.getValue(Bytes.toBytes("personal"), Bytes.toBytes("power")));
+        String name = Bytes.toString(result.getValue(Bytes.toBytes("professional"), Bytes.toBytes("name")));
+        String color = Bytes.toString(result.getValue(Bytes.toBytes("custom"), Bytes.toBytes("color")));
+
+        powerList.add(power);
+        nameList.add(name);
+        colorList.add(color);
     }
+    System.println(powerList.toString());
+    System.println(nameList.toString());
+    System.println(colorList.toString());
 	String name = "???";
 	String power = "???";
 	String color = "???";
