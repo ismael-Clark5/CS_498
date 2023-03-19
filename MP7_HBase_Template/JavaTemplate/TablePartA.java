@@ -21,8 +21,18 @@ public class TablePartA{
 
    public static void main(String[] args) throws IOException {
 
-	//TODO
-	
+	HBaseConfigurtation hBaseConfig = new HBaseConfiguration(new Configuration());
+    HTableDescriptor powersTable = new HTableDescriptor("powers");
+    powersTable.addFamily(new HColumnDescriptor("personal"));
+    powersTable.addFamily(new HColumnDescriptor("professional"));
+    powersTable.addFamily(new HColumnDescriptor("custom"));
+
+    HTableDescriptor foodTable = new HTableDescriptor("food");
+    foodTable.addFamily(new HColumnDescriptor("nutrition"));
+    foodTable.addFamily(new HColumnDescriptor("taste"));
+
+    HBaseAdmin hba = new HBaseAdmin(hBaseConfig);
+    hba.createTable(ht);
    }
 }
 
