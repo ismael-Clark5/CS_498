@@ -1,4 +1,4 @@
-SELECT * FROM "powers"
+SELECT * FROM "powers";
 --DROP TABLE IF EXISTS "powers";
 --
 --CREATE VIEW "powers" (pk VARCHAR PRIMARY KEY, "personal"."hero" VARCHAR, "personal"."power" VARCHAR,
