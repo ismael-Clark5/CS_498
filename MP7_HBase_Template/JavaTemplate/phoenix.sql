@@ -1,3 +1,5 @@
+DROP VIEW IF EXISTS "powers";
+
 CREATE VIEW "powers" (pk VARCHAR PRIMARY KEY, "personal"."hero" VARCHAR, "personal"."power" VARCHAR,
 "professional"."name" VARCHAR, "professional"."xp" VARCHAR, "custom"."color" VARCHAR);
 
