@@ -1,1 +1,1 @@
-jdbc:phoenix:localhost
+localhost:2181
