@@ -8,5 +8,5 @@ CREATE VIEW "powers" (pk VARCHAR PRIMARY KEY, "personal"."hero" VARCHAR, "person
 --INNER JOIN "powers" as p1
 --ON p."power" = p1."power"
 --WHERE p."hero" = "yes" and p1."hero" = "yes";
-SELECT p."name" as Name1
+SELECT *
 FROM "powers" as p;
