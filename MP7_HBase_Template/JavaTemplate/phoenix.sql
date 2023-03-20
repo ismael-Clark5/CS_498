@@ -9,4 +9,5 @@
 --ON p."power" = p1."power"
 --WHERE p."hero" = "yes" and p1."hero" = "yes";
 SELECT *
-FROM "powers" as p;
+FROM "powers" as p
+WHERE "p"."name" = batman;
