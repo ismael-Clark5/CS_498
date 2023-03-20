@@ -8,6 +8,8 @@
 --INNER JOIN "powers" as p1
 --ON p."power" = p1."power"
 --WHERE p."hero" = "yes" and p1."hero" = "yes";
-SELECT *
+SELECT p."name" as Name1, p1."name" as Name2, p."power" as Power
 FROM "powers" as p
-WHERE p."professional"."name" = 'batman';
+JOIN "powers" as p1
+ON p."power" = p1."power"
+WHERE p."hero" = 'yes' and p1."hero" = 'yes';
