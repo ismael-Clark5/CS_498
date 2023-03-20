@@ -34,13 +34,6 @@ public class TablePartC{
     HColumnDescriptor powersProfessionalDescriptor = new HColumnDescriptor("professional");
     HColumnDescriptor powersCustomDescriptor = new HColumnDescriptor("custom");
 
-//    hba.addColumn("hero", powersPersonalDescriptor);
-//    hba.addColumn("power", powersPersonalDescriptor);
-//
-//    hba.addColumn("name", powersProfessionalDescriptor);
-//    hba.addColumn("xp", powersProfessionalDescriptor);
-//
-//    hba.addColumn("color", powersCustomDescriptor);
 
     File csvInput = new File("input.csv");
     FileReader fr = new FileReader(csvInput);
@@ -62,13 +55,12 @@ public class TablePartC{
         p.add(Bytes.toBytes("personal"), Bytes.toBytes("power"), Bytes.toBytes(power));
 
         p.add(Bytes.toBytes("professional"), Bytes.toBytes("name"), Bytes.toBytes(name));
-        p.add(Bytes.toBytes("professional"), Bytes.toBytes("xp"), Bytes.toBytes(name));
+        p.add(Bytes.toBytes("professional"), Bytes.toBytes("xp"), Bytes.toBytes(xp));
 
         p.add(Bytes.toBytes("custom"), Bytes.toBytes("color"), Bytes.toBytes(color));
 
         hTable.put(p);
     }
-    hTable.close();
    }
 }
 
