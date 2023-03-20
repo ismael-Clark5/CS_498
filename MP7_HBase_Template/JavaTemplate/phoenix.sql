@@ -10,4 +10,4 @@
 --WHERE p."hero" = "yes" and p1."hero" = "yes";
 SELECT *
 FROM "powers" as p
-WHERE p."professional"."name" = p."batman";
+WHERE p."professional"."name" = 'batman';
