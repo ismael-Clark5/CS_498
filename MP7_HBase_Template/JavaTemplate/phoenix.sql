@@ -1,6 +1,6 @@
 --DROP VIEW "powers"
 --SELECT * FROM "powers"
-CREATE VIEW powers (pk VARCHAR PRIMARY KEY, personal.hero VARCHAR, personal.power VARCHAR,
+CREATE VIEW "powers" (pk VARCHAR PRIMARY KEY, personal.hero VARCHAR, personal.power VARCHAR,
 professional.name VARCHAR, professional.xp VARCHAR, custom.color VARCHAR);
 --
 --SELECT p."name" as Name1, p1."name" as Name2, p."power" as Power
